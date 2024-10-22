@@ -40,10 +40,10 @@ ThemeData getApplicationTheme() {
       //elevated button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              textStyle: getMediumStyle(color: ColorManager.white, fontSize: AppPadding.p14),
+              textStyle: getSemiBoldStyle(color:ColorManager.white, fontSize: AppPadding.p16),
               primary: ColorManager.buttonColor,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSize.s28)))),
+                  borderRadius: BorderRadius.circular(AppSize.s16)))),
 
       //text theme
       textTheme: TextTheme(
@@ -51,8 +51,9 @@ ThemeData getApplicationTheme() {
               color: ColorManager.white, fontSize: FontSize.s18),
           subtitle1: getMediumStyle(
               color: ColorManager.white, fontSize: FontSize.s14),
-          caption: getRegularStyle(color: ColorManager.grey1),
-          bodyText1: getRegularStyle(color: ColorManager.grey)),
+          caption: getRegularStyle(color: ColorManager.white),
+          bodyText1: getRegularStyle(color: ColorManager.white),
+      ),
 
       //Input decoration theme(text form field
       inputDecorationTheme: InputDecorationTheme(

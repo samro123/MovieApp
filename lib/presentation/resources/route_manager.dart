@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_video/app/di.dart';
 import 'package:movie_video/presentation/forgot_password/forgot_password.dart';
 import 'package:movie_video/presentation/login/login.dart';
 import 'package:movie_video/presentation/main/main_view.dart';
@@ -24,12 +25,14 @@ class RouteGenerator {
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => OnBoardingView());
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => LoginView());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => RegisterView());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.forgotPasswordRoute:
+        initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => ForgotPasswordView());
       default:
         return unDefineRoute();

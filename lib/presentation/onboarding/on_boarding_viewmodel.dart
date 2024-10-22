@@ -1,6 +1,7 @@
+// on_boarding_viewmodel.dart
 import 'dart:async';
 
-import 'package:movie_video/domain/model.dart';
+import 'package:movie_video/domain/model/model.dart';
 import 'package:movie_video/presentation/base/baseviewmodel.dart';
 import 'package:movie_video/presentation/resources/assets_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
@@ -8,70 +9,85 @@ import 'package:movie_video/presentation/resources/strings_manager.dart';
 class OnBoardingViewModel extends BaseViewModel
     implements OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
 
-  final StreamController _streamController = StreamController();
+  final StreamController<SliderViewObject> _streamController = StreamController<SliderViewObject>.broadcast();
+  final StreamController<void> _navigationController = StreamController<void>.broadcast();
 
   late final List<SliderObject> _list;
-  int _currentIndex = 0;
+  int currentIndex = 0;
+  Timer? _timer;
 
   @override
   void dispose() {
     _streamController.close();
+    _navigationController.close();
+    _timer?.cancel();
   }
 
   @override
   void start() {
-    // TODO: implement start
+    _list = _getSliderData();
+    _postDataToView();
+    startTimer();
   }
 
   @override
-  int goNext() {
-    int nextIndex = _currentIndex ++; // -1
-    if (nextIndex >= _list.length){
-      _currentIndex = 0; // infinite loop to go to first item inside the slider
+  void goNext() {
+    if (currentIndex < _list.length - 1) {
+      currentIndex++;
+    } else {
+      currentIndex = 0; // Infinite loop to first slide
     }
-    return _currentIndex;
+    _postDataToView();
+    _navigateToPage();
   }
 
   @override
-  int goPrevious() {
-    int previousIndex = _currentIndex --; // -1
-    if (previousIndex == -1){
-      _currentIndex = _list.length - 1; // infinite loop to go to length  of slider
+  void goPrevious() {
+    if (currentIndex > 0) {
+      currentIndex--;
+    } else {
+      currentIndex = _list.length - 1; // Infinite loop to last slide
     }
-    return _currentIndex;
+    _postDataToView();
+    _navigateToPage();
   }
 
   @override
   void onPageChanged(int index) {
-    _currentIndex = index;
+    currentIndex = index;
     _postDataToView();
   }
 
-
-
   @override
   void startTimer() {
-    // TODO: implement startTimer
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      goNext();
+    });
+  }
+
+  void _navigateToPage() {
+    _navigationController.add(null); // Emit an event to navigate
   }
 
   @override
-  // TODO: implement inputSliderViewObject
-  Sink get inputSliderViewObject =>_streamController.sink;
+  Sink get inputSliderViewObject => _streamController.sink;
 
   @override
-  // TODO: implement outputSliderViewObject
-  Stream<SliderViewObject> get outputSliderViewObject  =>
-      _streamController.stream.map((slideViewObject) => slideViewObject);
+  Stream<SliderViewObject> get outputSliderViewObject =>
+      _streamController.stream.map((sliderViewObject) => sliderViewObject);
 
-  // private functions
+  Stream<void> get navigateToPageStream => _navigationController.stream;
+
+  // Private functions
   List<SliderObject> _getSliderData() => [
     SliderObject(AppString.onBoardingTitle1, AppString.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
     SliderObject(AppString.onBoardingTitle2, AppString.onBoardingSubTitle2, ImageAssets.onboardingLogo2),
     SliderObject(AppString.onBoardingTitle3, AppString.onBoardingSubTitle3, ImageAssets.onboardingLogo3),
-    SliderObject(AppString.onBoardingTitle4, AppString.onBoardingSubTitle1, ImageAssets.onboardingLogo4),
+    SliderObject(AppString.onBoardingTitle4, AppString.onBoardingSubTitle4, ImageAssets.onboardingLogo4),
   ];
-  _postDataToView(){
-    inputSliderViewObject.add(SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
+
+  void _postDataToView() {
+    inputSliderViewObject.add(SliderViewObject(_list, _list.length, currentIndex));
   }
 }
 
@@ -88,9 +104,10 @@ abstract class OnBoardingViewModelOutputs {
   Stream<SliderViewObject> get outputSliderViewObject;
 }
 
-class SliderViewObject{
-  SliderObject sliderObject;
-  int numOfSlide;
-  int currentIndex;
-  SliderViewObject(this.sliderObject,this.numOfSlide, this.currentIndex );
+class SliderViewObject {
+  final List<SliderObject> sliderList;
+  final int numOfSlide;
+  final int currentIndex;
+
+  SliderViewObject(this.sliderList, this.numOfSlide, this.currentIndex);
 }
