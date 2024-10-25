@@ -5,6 +5,7 @@ import 'package:movie_video/data/responses/responses.dart';
 abstract class RemoteDataSource{
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
   Future<ForgotPasswordResponse> forgotPassword(String email);
+  Future<RegisterAuthResponse> register(RegisterRequest registerRequest);
 }
 class RemoteDataSourceImplementer implements RemoteDataSource{
   AppServiceClient _appServiceClient;
@@ -21,5 +22,16 @@ class RemoteDataSourceImplementer implements RemoteDataSource{
   @override
   Future<ForgotPasswordResponse> forgotPassword(String email) async{
     return await _appServiceClient.forgotPassword(email);
+  }
+
+  @override
+  Future<RegisterAuthResponse> register(RegisterRequest registerRequest) async{
+    return await _appServiceClient.register(
+        registerRequest.username,
+        registerRequest.password,
+        registerRequest.firstName,
+        registerRequest.lastName,
+        registerRequest.dob
+    );
   }
 }

@@ -18,6 +18,12 @@ class AppString{
   static const String usernameError = "UserName is wrong";
   static const String password = "Password";
   static const String passwordError = "Password is wrong";
+  static const String firstName = "FirstName";
+  static const String firstNameError = "FirstName is wrong";
+  static const String lastName = "LastName";
+  static const String lastNameError = "LastName is wrong";
+  static const String dob = "Dob";
+  static const String dobError = "Dob is wrong";
   static const String forgetPassword = "ForgotPassword";
   static const String registerText = "Not a member ? Sign up";
   static const String loading = "Loading...";
@@ -28,4 +34,5 @@ class AppString{
   static const String invalidEmail = "Invalid Email";
   static const String resetPassword = "Reset Password";
   static const String success = "success";
+  static const String haveAccount = "Already have an account? Login";
 }

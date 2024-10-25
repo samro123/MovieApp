@@ -3,3 +3,12 @@ class LoginRequest{
   String password;
   LoginRequest(this.username, this.password);
 }
+
+class RegisterRequest{
+  String username;
+  String password;
+  String firstName;
+  String lastName;
+  String dob;
+  RegisterRequest(this.username, this.password, this.firstName, this.lastName, this.dob);
+}

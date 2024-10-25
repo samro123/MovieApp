@@ -4,7 +4,7 @@ import 'package:movie_video/presentation/forgot_password/forgot_password.dart';
 import 'package:movie_video/presentation/login/login.dart';
 import 'package:movie_video/presentation/main/main_view.dart';
 import 'package:movie_video/presentation/onboarding/on_boarding.dart';
-import 'package:movie_video/presentation/register/reigster.dart';
+import 'package:movie_video/presentation/register/register.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
 import 'package:movie_video/presentation/splash/splash.dart';
 
@@ -28,6 +28,7 @@ class RouteGenerator {
         initLoginModule();
         return MaterialPageRoute(builder: (_) => LoginView());
       case Routes.registerRoute:
+        initRegisterModule();
         return MaterialPageRoute(builder: (_) => RegisterView());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => MainView());

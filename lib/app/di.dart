@@ -9,8 +9,10 @@ import 'package:movie_video/data/repository/repository_Impl.dart';
 import 'package:movie_video/domain/repository/repository.dart';
 import 'package:movie_video/domain/usecase/forgot_password_usecase.dart';
 import 'package:movie_video/domain/usecase/login_usecase.dart';
+import 'package:movie_video/domain/usecase/register_usecase.dart';
 import 'package:movie_video/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:movie_video/presentation/login/login_viewmodel.dart';
+import 'package:movie_video/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final instance = GetIt.instance;
@@ -39,4 +41,18 @@ initForgotPasswordModule(){
     instance.registerFactory<ForgotPasswordUseCase>(() => ForgotPasswordUseCase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(() => ForgotPasswordViewModel(instance()));
   }
+}
+initRegisterModule(){
+  if(!GetIt.I.isRegistered<RegisterUseCase>()){
+    instance.registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
+    instance.registerFactory<RegisterViewModel>(() => RegisterViewModel(instance()));
+  }
+}
+
+resetAllModules(){
+  instance.reset(dispose: false);
+  initAppModule();
+  initRegisterModule();
+  initLoginModule();
+  initForgotPasswordModule();
 }

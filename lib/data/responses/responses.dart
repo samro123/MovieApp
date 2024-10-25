@@ -66,3 +66,53 @@ class ForgotPasswordResponse extends BaseResponse {
   factory ForgotPasswordResponse.fromJson(Map<String, dynamic> json) =>
       _$ForgotPasswordResponseFromJson(json);
 }
+
+// register.
+@JsonSerializable()
+class RoleResponse{
+  @JsonKey(name: 'name')
+  String? name;
+
+  @JsonKey(name: 'description')
+  String? description;
+
+  @JsonKey(name: 'permissions')
+  List<String>? permissions;
+  RoleResponse(this.name, this.description, this.permissions);
+
+  Map<String, dynamic> toJson() => _$RoleResponseToJson(this);
+  factory RoleResponse.fromJson(Map<String, dynamic> json) =>
+      _$RoleResponseFromJson(json);
+}
+
+@JsonSerializable()
+class RegisterResultResponse{
+  @JsonKey(name:'id')
+  String? id;
+
+  @JsonKey(name: 'username')
+  String? username;
+
+  @JsonKey(name: 'roles')
+  List<RoleResponse>? roles;
+  RegisterResultResponse(this.id, this.username, this.roles);
+
+
+  factory RegisterResultResponse.fromJson(Map<String, dynamic> json) =>
+      _$RegisterResultResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegisterResultResponseToJson(this);
+}
+
+@JsonSerializable()
+class RegisterAuthResponse extends BaseResponse{
+  @JsonKey(name:'result')
+  RegisterResultResponse? result;
+
+  RegisterAuthResponse(int? code,String? message, this.result):super(code, message);
+
+  factory RegisterAuthResponse.fromJson(Map<String, dynamic> json) =>
+      _$RegisterAuthResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegisterAuthResponseToJson(this);
+}

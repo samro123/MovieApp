@@ -149,3 +149,206 @@ abstract class _LoginObject implements LoginObject {
   _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$RegisterObject {
+  String get username => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get dob => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $RegisterObjectCopyWith<RegisterObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RegisterObjectCopyWith<$Res> {
+  factory $RegisterObjectCopyWith(
+          RegisterObject value, $Res Function(RegisterObject) then) =
+      _$RegisterObjectCopyWithImpl<$Res, RegisterObject>;
+  @useResult
+  $Res call(
+      {String username,
+      String password,
+      String firstName,
+      String lastName,
+      String dob});
+}
+
+/// @nodoc
+class _$RegisterObjectCopyWithImpl<$Res, $Val extends RegisterObject>
+    implements $RegisterObjectCopyWith<$Res> {
+  _$RegisterObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? password = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? dob = null,
+  }) {
+    return _then(_value.copyWith(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      dob: null == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RegisterObjectImplCopyWith<$Res>
+    implements $RegisterObjectCopyWith<$Res> {
+  factory _$$RegisterObjectImplCopyWith(_$RegisterObjectImpl value,
+          $Res Function(_$RegisterObjectImpl) then) =
+      __$$RegisterObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String username,
+      String password,
+      String firstName,
+      String lastName,
+      String dob});
+}
+
+/// @nodoc
+class __$$RegisterObjectImplCopyWithImpl<$Res>
+    extends _$RegisterObjectCopyWithImpl<$Res, _$RegisterObjectImpl>
+    implements _$$RegisterObjectImplCopyWith<$Res> {
+  __$$RegisterObjectImplCopyWithImpl(
+      _$RegisterObjectImpl _value, $Res Function(_$RegisterObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? password = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? dob = null,
+  }) {
+    return _then(_$RegisterObjectImpl(
+      null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RegisterObjectImpl implements _RegisterObject {
+  _$RegisterObjectImpl(
+      this.username, this.password, this.firstName, this.lastName, this.dob);
+
+  @override
+  final String username;
+  @override
+  final String password;
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
+  final String dob;
+
+  @override
+  String toString() {
+    return 'RegisterObject(username: $username, password: $password, firstName: $firstName, lastName: $lastName, dob: $dob)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RegisterObjectImpl &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.dob, dob) || other.dob == dob));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, username, password, firstName, lastName, dob);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RegisterObjectImplCopyWith<_$RegisterObjectImpl> get copyWith =>
+      __$$RegisterObjectImplCopyWithImpl<_$RegisterObjectImpl>(
+          this, _$identity);
+}
+
+abstract class _RegisterObject implements RegisterObject {
+  factory _RegisterObject(
+      final String username,
+      final String password,
+      final String firstName,
+      final String lastName,
+      final String dob) = _$RegisterObjectImpl;
+
+  @override
+  String get username;
+  @override
+  String get password;
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override
+  String get dob;
+  @override
+  @JsonKey(ignore: true)
+  _$$RegisterObjectImplCopyWith<_$RegisterObjectImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

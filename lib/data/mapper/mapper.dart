@@ -17,3 +17,22 @@ extension ForgotPasswordResponseMapper on ForgotPasswordResponse?{
     return this?.support?.orEmpty() ?? EMPTY;
   }
 }
+extension RolesResponseMapper on RoleResponse?{
+  Roles toDomain(){
+    return Roles(
+        this?.name?.orEmpty() ?? EMPTY,
+        this?.description?.orEmpty() ?? EMPTY,
+        (this?.permissions?.map((permissions) => permissions) ?? Iterable.empty()).cast<String>().toList()
+    );
+  }
+}
+extension RegisterAuthenticationResponseMapper on RegisterAuthResponse?{
+  RegisterAuthentication toDomain(){
+    List<Roles> mapRoles = (this?.result?.roles?.map((roles) => roles.toDomain())
+        ?? Iterable.empty()).cast<Roles>().toList();
+    return RegisterAuthentication(
+        this?.result?.id?.orEmpty() ?? EMPTY,
+        this?.result?.username?.orEmpty() ?? EMPTY,
+        mapRoles);
+  }
+}

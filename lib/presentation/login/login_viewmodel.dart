@@ -15,7 +15,7 @@ class LoginViewModel extends BaseViewModel implements
   StreamController _isAllInputsValidStreamController=
       StreamController<void>.broadcast();
   StreamController isUserLoggedInSuccessfullyStreamController=
-      StreamController<bool>();
+      StreamController<String>();
   var loginObject = LoginObject("", "");
   LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
@@ -55,7 +55,7 @@ class LoginViewModel extends BaseViewModel implements
           StateRendererType.POPUP_ERROR_STATE, failure.message))},
             (data){
           inputState.add(ContentState());
-          isUserLoggedInSuccessfullyStreamController.add(true);
+          isUserLoggedInSuccessfullyStreamController.add(data.token);
             });
   }
   @override
