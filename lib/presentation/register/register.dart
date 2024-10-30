@@ -93,8 +93,20 @@ class _RegisterViewState extends State<RegisterView> {
           key: _formKey,
           child: Column(
             children: [
-              Image(image: AssetImage(ImageAssets.splashLogo)),
-              const SizedBox(height: AppSize.s28,),
+              Padding(padding:EdgeInsets.only(left: AppPadding.p28, right: AppPadding.p28),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [ Text(AppString.signup,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                        fontSize: AppSize.s32,color: ColorManager.white
+                    ),
+                  ),
+                    const SizedBox(width: AppSize.s1_5,)
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSize.s23,),
               Padding(padding: EdgeInsets.only(left: AppPadding.p28, right: AppPadding.p28),
                 child: StreamBuilder<String?>(
                   stream: _viewModel.outputErrorUserName,
@@ -182,12 +194,17 @@ class _RegisterViewState extends State<RegisterView> {
                   builder: (context, snapshot){
                     return SizedBox(
                       width: double.infinity,
-                      height: AppSize.s40,
+                      height: AppSize.s53,
                       child: ElevatedButton(
                           onPressed: (snapshot.data ?? false) ?  (){
                             _viewModel.register();
                           }: null ,
-                          child: Text(AppString.register)),
+                          child: Text(AppString.register),
+                          style:  ElevatedButton.styleFrom(
+                              onSurface: Colors.white,
+                              backgroundColor: (snapshot.data ?? false) ? ColorManager.buttonColor : ColorManager.grey1
+                          ),
+                      ),
                     );
                   },
                 ),),

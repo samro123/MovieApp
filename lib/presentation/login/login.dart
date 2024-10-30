@@ -82,7 +82,6 @@ class _LoginViewState extends State<LoginView> {
               ),
               ),
 
-
               SizedBox(height: AppSize.s23,),
               Padding(
                   padding: EdgeInsets.only(left: AppPadding.p28, right: AppPadding.p28),

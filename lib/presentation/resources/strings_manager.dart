@@ -14,6 +14,7 @@ class AppString{
   static const String login = "Login";
   static const String signIn = "Sign In";
   static const String register = "Register";
+  static const String signup = "Sign Up";
   static const String username = "UserName";
   static const String usernameError = "UserName is wrong";
   static const String password = "Password";
@@ -35,4 +36,20 @@ class AppString{
   static const String resetPassword = "Reset Password";
   static const String success = "success";
   static const String haveAccount = "Already have an account? Login";
+  static const String home = "Home";
+  static const String notification = "Notification";
+  static const String search = "Search";
+  static const String settings = "Settings";
+  static const String hi = "Hi, Tom!";
+  static const String forYou = "For You";
+  static const String popular = "Popular";
+  static const String genres = "Genres";
+  static const String legendary = "Legendary movies";
+  static const String seeAll = "See All";
+  static const String dune = "Dune";
+  static const String cast = "Cast";
+  static const String trailer = "Trailer";
+  static const String comments = "Comments";
+  static const String watching = "Watching Movie";
+
 }
