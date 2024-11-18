@@ -31,6 +31,7 @@ class RouteGenerator {
         initRegisterModule();
         return MaterialPageRoute(builder: (_) => RegisterView());
       case Routes.mainRoute:
+        initPaginatedMoviesModule();
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.forgotPasswordRoute:
         initForgotPasswordModule();

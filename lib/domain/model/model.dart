@@ -23,3 +23,36 @@ class RegisterAuthentication{
   List<Roles> roles;
   RegisterAuthentication(this.id, this.username, this.roles);
 }
+
+class Movies{
+  String id;
+  String title;
+  String category;
+  String description;
+  String trailerUrl;
+  String videoUrl;
+  String posterUrl;
+  String createdDate;
+  String modifiedDate;
+
+  Movies(
+      this.id, this.title,
+      this.category, this.description,
+      this.trailerUrl, this.videoUrl,
+      this.posterUrl, this.createdDate,
+      this.modifiedDate
+      );
+}
+
+class PaginatedMovies{
+  int currentPage;
+  int totalPages;
+  int pageSize;
+  int totalElements;
+  List<Movies> movies;
+  PaginatedMovies(
+      this.currentPage, this.totalPages,
+      this.pageSize, this.totalElements,
+      this.movies
+      );
+}

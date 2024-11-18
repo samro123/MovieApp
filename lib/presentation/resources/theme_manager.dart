@@ -47,12 +47,20 @@ ThemeData getApplicationTheme() {
 
       //text theme
       textTheme: TextTheme(
-          headline1: getSemiBoldStyle(
-              color: ColorManager.white, fontSize: FontSize.s18),
-          subtitle1: getMediumStyle(
-              color: ColorManager.white, fontSize: FontSize.s14),
-          caption: getRegularStyle(color: ColorManager.white),
-          bodyText1: getRegularStyle(color: ColorManager.white),
+        headline1: getSemiBoldStyle(
+            color: ColorManager.darkGrey, fontSize: FontSize.s16),
+        headline2: getRegularStyle(
+            color: ColorManager.white, fontSize: FontSize.s16),
+        headline3: getBoldStyle(
+            color: ColorManager.primary, fontSize: FontSize.s16),
+        headline4: getRegularStyle(
+            color: ColorManager.primary, fontSize: FontSize.s16),
+        subtitle1: getMediumStyle(
+            color: ColorManager.white, fontSize: FontSize.s14),
+        subtitle2: getMediumStyle(
+            color: ColorManager.primary, fontSize: FontSize.s14),
+        caption: getRegularStyle(color: ColorManager.white),
+        bodyText1: getRegularStyle(color: ColorManager.white),
       ),
 
       //Input decoration theme(text form field
@@ -60,9 +68,9 @@ ThemeData getApplicationTheme() {
         contentPadding: EdgeInsets.all(AppPadding.p8),
         //hint style
         //hint style
-        hintStyle: getRegularStyle(color: ColorManager.grey1),
+        hintStyle: getRegularStyle(color: ColorManager.white),
         // label style
-        labelStyle: getMediumStyle(color: ColorManager.darkGrey),
+        labelStyle: getMediumStyle(color: ColorManager.white.withOpacity(0.8)),
         //error style
         errorStyle: getRegularStyle(color: ColorManager.error),
         //enabled border
@@ -74,7 +82,7 @@ ThemeData getApplicationTheme() {
         //focused border
         focusedBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
+                BorderSide(color: ColorManager.white.withOpacity(0.8), width: AppSize.s1_5),
             borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
 
         //error border
@@ -87,7 +95,7 @@ ThemeData getApplicationTheme() {
         //focused error border
         focusedErrorBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
+                BorderSide(color: ColorManager.white.withOpacity(0.8), width: AppSize.s1_5),
             borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
       ));
 }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:movie_video/data/data_source/local_data_source.dart';
 import 'package:movie_video/data/data_source/remote_data_source.dart';
 import 'package:movie_video/data/mapper/mapper.dart';
 import 'package:movie_video/data/network/error_handler.dart';
@@ -10,8 +11,9 @@ import 'package:movie_video/domain/repository/repository.dart';
 
 class RepositoryImpl extends Repository{
   RemoteDataSource _remoteDataSource;
+  LocalDataSource _localDataSource;
   NetWorkInfo _networkInfo;
-  RepositoryImpl(this._remoteDataSource, this._networkInfo);
+  RepositoryImpl(this._remoteDataSource,this._localDataSource, this._networkInfo);
   @override
   Future<Either<Failure, Authentication>> login(LoginRequest loginRequest) async {
     if(await _networkInfo.isConnected){
@@ -76,5 +78,30 @@ class RepositoryImpl extends Repository{
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-  
+
+  @override
+  Future<Either<Failure, PaginatedMovies>> getPaginatedMovies(int page, int size) async {
+    try{
+      final response = await _localDataSource.getMovie();
+      return Right(response.toDomain());
+    }catch(cacheError){
+      if(await _networkInfo.isConnected){
+        try{
+          final response = await _remoteDataSource.getPaginatedMovie(page, size);
+          if(response.code == ApiInternalStatus.SUCCESS){
+            _localDataSource.saveMovieToCache(response);
+            return Right(response.toDomain());
+          }else{
+            return Left(Failure(response.code ?? ApiInternalStatus.FAILURE,
+                        response.message ?? ResponseMessage.DEFAULT
+            ));
+          }
+        }catch(error){
+          return (Left(ErrorHandler.handle(error).failure));
+        }
+      }else{
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
 }

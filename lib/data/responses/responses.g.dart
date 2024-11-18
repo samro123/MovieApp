@@ -112,3 +112,69 @@ Map<String, dynamic> _$RegisterAuthResponseToJson(
       'message': instance.message,
       'result': instance.result,
     };
+
+MovieResponse _$MovieResponseFromJson(Map<String, dynamic> json) =>
+    MovieResponse(
+      json['id'] as String?,
+      json['title'] as String?,
+      json['category'] as String?,
+      json['description'] as String?,
+      json['trailerUrl'] as String?,
+      json['videoUrl'] as String?,
+      json['posterUrl'] as String?,
+      json['createdDate'] as String?,
+      json['modifiedDate'] as String?,
+    );
+
+Map<String, dynamic> _$MovieResponseToJson(MovieResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'category': instance.category,
+      'description': instance.description,
+      'trailerUrl': instance.trailerUrl,
+      'videoUrl': instance.videoUrl,
+      'posterUrl': instance.posterUrl,
+      'createdDate': instance.createdDate,
+      'modifiedDate': instance.modifiedDate,
+    };
+
+MovieResultResponse _$MovieResultResponseFromJson(Map<String, dynamic> json) =>
+    MovieResultResponse(
+      (json['currentPage'] as num?)?.toInt(),
+      (json['totalPages'] as num?)?.toInt(),
+      (json['pageSize'] as num?)?.toInt(),
+      (json['totalElements'] as num?)?.toInt(),
+      (json['data'] as List<dynamic>?)
+          ?.map((e) => MovieResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$MovieResultResponseToJson(
+        MovieResultResponse instance) =>
+    <String, dynamic>{
+      'currentPage': instance.currentPage,
+      'totalPages': instance.totalPages,
+      'pageSize': instance.pageSize,
+      'totalElements': instance.totalElements,
+      'data': instance.data,
+    };
+
+PaginatedMoviesResponse _$PaginatedMoviesResponseFromJson(
+        Map<String, dynamic> json) =>
+    PaginatedMoviesResponse(
+      (json['code'] as num?)?.toInt(),
+      json['message'] as String?,
+      json['result'] == null
+          ? null
+          : MovieResultResponse.fromJson(
+              json['result'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$PaginatedMoviesResponseToJson(
+        PaginatedMoviesResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'result': instance.result,
+    };

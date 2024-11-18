@@ -6,6 +6,7 @@ abstract class RemoteDataSource{
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
   Future<ForgotPasswordResponse> forgotPassword(String email);
   Future<RegisterAuthResponse> register(RegisterRequest registerRequest);
+  Future<PaginatedMoviesResponse> getPaginatedMovie(int page, int size);
 }
 class RemoteDataSourceImplementer implements RemoteDataSource{
   AppServiceClient _appServiceClient;
@@ -33,5 +34,10 @@ class RemoteDataSourceImplementer implements RemoteDataSource{
         registerRequest.lastName,
         registerRequest.dob
     );
+  }
+
+  @override
+  Future<PaginatedMoviesResponse> getPaginatedMovie(int page, int size) async{
+    return await _appServiceClient.getPaginatedMovies(page, size);
   }
 }

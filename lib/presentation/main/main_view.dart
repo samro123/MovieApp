@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:movie_video/presentation/main/home_page.dart';
-import 'package:movie_video/presentation/main/movie_page.dart';
+import 'package:movie_video/presentation/main/movie/movie_page.dart';
 import 'package:movie_video/presentation/main/notifications_page.dart';
+import 'package:movie_video/presentation/main/profile_page.dart';
 import 'package:movie_video/presentation/main/search_page.dart';
 import 'package:movie_video/presentation/main/settings_page.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
@@ -20,7 +21,7 @@ class _MainViewState extends State<MainView> {
   List<Widget> pages = [
    MoviePage(),
    SearchPage(),
-   NotificationsPage(),
+   ProfilePage(),
    SettingsPage()
   ];
   List<String> title = [

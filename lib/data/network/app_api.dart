@@ -24,4 +24,10 @@ abstract class AppServiceClient{
       @Field("lastName") String lastName,
       @Field("dob") String dob
       );
+  
+  @GET("/movie/lists")
+  Future<PaginatedMoviesResponse> getPaginatedMovies(
+      @Query("page") int page,
+      @Query("size") int size,
+      );
 }

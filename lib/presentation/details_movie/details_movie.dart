@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_video/data/movie.dart';
+import 'package:movie_video/presentation/main/comment/comment_page.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
 import 'package:movie_video/presentation/resources/font_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
@@ -232,73 +233,91 @@ class _MovieDetailState extends State<MovieDetail> {
           itemCount: popularItems[0].comments!.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return Container(
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppSize.s20),
-                color: ColorManager.grey
-              ),
-              margin: const EdgeInsets.only(right: AppMargin.m15),
-              padding: const EdgeInsets.symmetric(vertical: AppPadding.p10, horizontal: AppPadding.p20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: AppSize.s50,
-                            width: AppSize.s50,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: AssetImage(popularImages[0].comments![index]['imageUrl'].toString(),)
-                                )
+            return InkWell(
+              onTap: (){
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: ColorManager.primary,
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: AppPadding.p16, bottom: AppPadding.p10),
+                        child: Container(
+                          height: AppHeight.h85(context),
+                          child: CommentPage(),
+                        ),
+                      );
+                    },
+                );
+              },
+              child: Container(
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppSize.s20),
+                  color: ColorManager.grey
+                ),
+                margin: const EdgeInsets.only(right: AppMargin.m15),
+                padding: const EdgeInsets.symmetric(vertical: AppPadding.p10, horizontal: AppPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: AppSize.s50,
+                              width: AppSize.s50,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: AssetImage(popularImages[0].comments![index]['imageUrl'].toString(),)
+                                  )
 
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: AppSize.s10,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(popularItems[0].comments![index]['name'],
-                                style: TextStyle(color: ColorManager.white, fontWeight: FontWeightManager.bold),
-                              ),
-                              const SizedBox(height: AppSize.s5,),
-                              Text(popularItems[0].comments![index]['date'],
-                                style: TextStyle(color: ColorManager.grey1),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(popularItems[0].comments![index]['rating'],
-                            style: TextStyle(color: ColorManager.white, fontWeight: FontWeightManager.bold),
-                          ),
-                          const SizedBox(width: 4,),
-                          Icon(Icons.star,size: AppSize.s12,color: ColorManager.yellow,)
-                        ],
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding:const EdgeInsets.symmetric(vertical: AppPadding.p10),
-                    child: Text(
-                      popularItems[0].comments![index]['comment'],
-                      maxLines: 3,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.clip,
-                      style:  TextStyle(color: ColorManager.white),
+                            const SizedBox(width: AppSize.s10,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(popularItems[0].comments![index]['name'],
+                                  style: TextStyle(color: ColorManager.white, fontWeight: FontWeightManager.bold),
+                                ),
+                                const SizedBox(height: AppSize.s5,),
+                                Text(popularItems[0].comments![index]['date'],
+                                  style: TextStyle(color: ColorManager.grey1),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(popularItems[0].comments![index]['rating'],
+                              style: TextStyle(color: ColorManager.white, fontWeight: FontWeightManager.bold),
+                            ),
+                            const SizedBox(width: 4,),
+                            Icon(Icons.star,size: AppSize.s12,color: ColorManager.yellow,)
+                          ],
+                        )
+                      ],
                     ),
-                  )
+                    Padding(
+                      padding:const EdgeInsets.symmetric(vertical: AppPadding.p10),
+                      child: Text(
+                        popularItems[0].comments![index]['comment'],
+                        maxLines: 3,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.clip,
+                        style:  TextStyle(color: ColorManager.white),
+                      ),
+                    )
 
-                ],
+                  ],
+                ),
               ),
             );
           },),

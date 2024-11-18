@@ -51,5 +51,11 @@ class AppString{
   static const String trailer = "Trailer";
   static const String comments = "Comments";
   static const String watching = "Watching Movie";
+  static const String about = "About";
+  static const String changeLanguage = "Change Language";
+  static const String contractUs = "Contract Us";
+  static const String logout = "Logout";
+  static const String inviteYourFriends = "Invite Your Friends";
+  static const String typeSomething = "Type Something...";
 
 }

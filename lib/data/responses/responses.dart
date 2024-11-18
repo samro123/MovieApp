@@ -116,3 +116,92 @@ class RegisterAuthResponse extends BaseResponse{
 
   Map<String, dynamic> toJson() => _$RegisterAuthResponseToJson(this);
 }
+
+// Response Api Movie.
+@JsonSerializable()
+class MovieResponse{
+  @JsonKey(name: "id")
+  String? id;
+
+  @JsonKey(name: "title")
+  String? title;
+
+  @JsonKey(name: "category")
+  String? category;
+
+  @JsonKey(name: "description")
+  String? description;
+
+  @JsonKey(name: "trailerUrl")
+  String? trailerUrl;
+
+  @JsonKey(name: "videoUrl")
+  String? videoUrl;
+
+  @JsonKey(name: "posterUrl")
+  String? posterUrl;
+
+  @JsonKey(name: "createdDate")
+  String? createdDate;
+
+  @JsonKey(name: "modifiedDate")
+  String? modifiedDate;
+
+  MovieResponse(
+      this.id,
+      this.title,
+      this.category,
+      this.description,
+      this.trailerUrl,
+      this.videoUrl,
+      this.posterUrl,
+      this.createdDate,
+      this.modifiedDate
+      );
+
+  factory MovieResponse.fromJson(Map<String, dynamic> json) =>
+      _$MovieResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MovieResponseToJson(this);
+}
+
+@JsonSerializable()
+class MovieResultResponse{
+  @JsonKey(name: "currentPage")
+  int? currentPage;
+
+  @JsonKey(name: "totalPages")
+  int? totalPages;
+
+  @JsonKey(name: "pageSize")
+  int? pageSize;
+
+  @JsonKey(name: "totalElements")
+  int? totalElements;
+
+  @JsonKey(name: "data")
+  List<MovieResponse>? data;
+
+  MovieResultResponse(
+      this.currentPage, this.totalPages,
+      this.pageSize, this.totalElements,
+      this.data
+      );
+
+  factory MovieResultResponse.fromJson(Map<String, dynamic> json) =>
+      _$MovieResultResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MovieResultResponseToJson(this);
+}
+
+@JsonSerializable()
+class PaginatedMoviesResponse extends BaseResponse{
+  @JsonKey(name: "result")
+  MovieResultResponse? result;
+
+  PaginatedMoviesResponse(int? code, String? message, this.result) : super(code, message);
+
+  factory PaginatedMoviesResponse.fromJson(Map<String, dynamic> json) =>
+      _$PaginatedMoviesResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedMoviesResponseToJson(this);
+}

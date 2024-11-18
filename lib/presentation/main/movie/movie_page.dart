@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_video/app/di.dart';
 import 'package:movie_video/data/movie.dart';
+import 'package:movie_video/domain/model/model.dart';
+import 'package:movie_video/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:movie_video/presentation/details_movie/details_movie.dart';
+import 'package:movie_video/presentation/main/movie/movie_viewmodel.dart';
 import 'package:movie_video/presentation/resources/assets_manager.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
@@ -19,12 +23,20 @@ class _MoviePageState extends State<MoviePage> {
   List<MovieModel> genresItems = List.of(genresList);
   List<MovieModel> legendaryItems = List.of(legendaryImages);
   PageController _pageController = PageController(initialPage: 0, viewportFraction: 0.9);
+  PaginatedMoviesViewModel _viewModel = instance<PaginatedMoviesViewModel>();
   int currentPage =0;
+
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  void initState() {
+    _bind();
+    super.initState();
   }
+
+  _bind(){
+    _viewModel.start();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,162 +47,179 @@ class _MoviePageState extends State<MoviePage> {
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(padding: const EdgeInsets.symmetric(vertical: AppPadding.p10, horizontal: AppPadding.p30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppString.hi,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Stack(
-                          children: [
-                            Container(
-                              height: AppSize.s50,
-                              width: AppSize.s50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(AppSize.s30),
-                                image: DecorationImage(
-                                  image:AssetImage(ImageAssets.userImage),
-                                  fit: BoxFit.cover
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: AppPadding.p2,
-                              right: AppPadding.p2,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: ColorManager.buttonColor,
-                                  ),
-                                  height: AppSize.s10,
-                                  width: AppSize.s10,
-                                ))
-                          ],
-                        ),
-
-                      ],
-                    ),
-                    ),
-                    const SizedBox(height: AppSize.s20,),
-                    Padding(padding:const EdgeInsets.symmetric(horizontal: AppPadding.p30),
-                    child: Container(
-                      padding: const EdgeInsets.all(AppPadding.p20),
-                      decoration: BoxDecoration(
-                        color: ColorManager.grey,
-                        borderRadius: BorderRadius.circular(AppSize.s20)
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.search, color: ColorManager.white,),
-                          const SizedBox(width:AppSize.s20),
-                          Text(AppString.search, style: TextStyle(fontSize: AppSize.s18, color: ColorManager.white),)
-                        ],
-                      ),
-                    ),
-                    ),
-                    const SizedBox(height: AppSize.s20,),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: AppPadding.p30, vertical: AppPadding.p5),
-                    child: Text(AppString.forYou, style: Theme.of(context).textTheme.bodyText1,),
-                    ),
-                    _getForYouCardsLayout(foryouItems),
-                    Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          padding: const EdgeInsets.all(AppPadding.p8),
-                          decoration: BoxDecoration(
-                            color: ColorManager.black1,
-                            borderRadius: BorderRadius.circular(AppSize.s20)
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: _getBuildPageIndicatorWidget(),),
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: AppPadding.p20, horizontal: AppPadding.p30),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppString.popular,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              Text(
-                                  AppString.seeAll,
-                                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      color: ColorManager.grey1
-                                  ),
-                              )
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    _getMoviePopulars(popularItems),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: AppPadding.p20, horizontal: AppPadding.p30),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppString.genres,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              Text(
-                                AppString.seeAll,
-                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    color: ColorManager.grey1
-                                ),
-                              )
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    _getGenresBuilder(genresItems),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: AppPadding.p20, horizontal: AppPadding.p30),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppString.legendary,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              Text(
-                                AppString.seeAll,
-                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                    color: ColorManager.grey1
-                                ),
-                              )
-                            ],
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    _getMoviePopulars(legendaryItems),
-
-                  ],
+                child: StreamBuilder<FlowState>(
+                  stream: _viewModel.outputState,
+                  builder: (context, snapshot) {
+                    return snapshot.data?.getScreenWidget(
+                        context, _getContentWidget(), (){
+                          _viewModel.start();
+                    }) ?? Container();
+                  },
                 ),
               )),
           Positioned(child: Container())
         ],
       ),
+    );
+  }
+
+  Widget _getContentWidget(){
+    return StreamBuilder<PaginatedMoviesViewObject>(
+        stream: _viewModel.outputPaginatedMoviesData,
+        builder: (context, snapshot) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(padding: const EdgeInsets.symmetric(vertical: AppPadding.p10, horizontal: AppPadding.p30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppString.hi,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    Stack(
+                      children: [
+                        Container(
+                          height: AppSize.s50,
+                          width: AppSize.s50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppSize.s30),
+                            image: DecorationImage(
+                                image:AssetImage(ImageAssets.userImage),
+                                fit: BoxFit.cover
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                            top: AppPadding.p2,
+                            right: AppPadding.p2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ColorManager.buttonColor,
+                              ),
+                              height: AppSize.s10,
+                              width: AppSize.s10,
+                            ))
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSize.s20,),
+              Padding(padding:const EdgeInsets.symmetric(horizontal: AppPadding.p30),
+                child: Container(
+                  padding: const EdgeInsets.all(AppPadding.p20),
+                  decoration: BoxDecoration(
+                      color: ColorManager.grey,
+                      borderRadius: BorderRadius.circular(AppSize.s20)
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search, color: ColorManager.white,),
+                      const SizedBox(width:AppSize.s20),
+                      Text(AppString.search, style: TextStyle(fontSize: AppSize.s18, color: ColorManager.white),)
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSize.s20,),
+              Padding(padding: EdgeInsets.symmetric(horizontal: AppPadding.p30, vertical: AppPadding.p5),
+                child: Text(AppString.forYou, style: Theme.of(context).textTheme.bodyText1,),
+              ),
+              _getForYouCardsLayout(foryouItems),
+              Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    padding: const EdgeInsets.all(AppPadding.p8),
+                    decoration: BoxDecoration(
+                        color: ColorManager.black1,
+                        borderRadius: BorderRadius.circular(AppSize.s20)
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: _getBuildPageIndicatorWidget(),),
+                  )),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppPadding.p20, horizontal: AppPadding.p30),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppString.popular,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        Text(
+                          AppString.seeAll,
+                          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: ColorManager.grey1
+                          ),
+                        )
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+              _getMoviePopulars(snapshot.data?.paginatedMove),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppPadding.p20, horizontal: AppPadding.p30),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppString.genres,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        Text(
+                          AppString.seeAll,
+                          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: ColorManager.grey1
+                          ),
+                        )
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+              _getGenresBuilder(genresItems),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppPadding.p20, horizontal: AppPadding.p30),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppString.legendary,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        Text(
+                          AppString.seeAll,
+                          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              color: ColorManager.grey1
+                          ),
+                        )
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+              _getMoviePopulars(snapshot.data?.paginatedMove),
+
+            ],
+          );
+        },
     );
   }
 
@@ -235,23 +264,27 @@ class _MoviePageState extends State<MoviePage> {
     );
   }
 
-  Widget _getMoviePopulars(List<MovieModel> models){
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppPadding.p30, vertical: AppPadding.p10),
-      height: AppHeight.h27(context),
-      child: ListView.builder(
+  Widget _getMoviePopulars(List<Movies>? movies){
+    if(movies != null){
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: AppPadding.p30, vertical: AppPadding.p10),
+        height: AppHeight.h27(context),
+        child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: models.length,
+          itemCount: movies.length,
           itemBuilder: (context, index) {
             return _getCustomCardNormal(
-              models[index]
+                movies[index]
             );
           },
-      ),
-    );
+        ),
+      );
+    }else{
+      return Container();
+    }
   }
 
-  Widget _getCustomCardNormal(MovieModel model){
+  Widget _getCustomCardNormal(Movies movies){
     return InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context) => const MovieDetail(),));
@@ -265,7 +298,7 @@ class _MoviePageState extends State<MoviePage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppSize.s18),
               image: DecorationImage(
-                image: AssetImage(model.imageAsset!),
+                image: AssetImage(movies.posterUrl),
                 fit: BoxFit.cover
               )
             ),
@@ -282,7 +315,7 @@ class _MoviePageState extends State<MoviePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            model.movieName!,
+                            movies.title,
                             maxLines: 1,
                             style: TextStyle(
                               color: ColorManager.white,
@@ -292,7 +325,7 @@ class _MoviePageState extends State<MoviePage> {
                           ),
                           const SizedBox(height: AppSize.s5,),
                           Text(
-                            model.year!,
+                            movies.createdDate,
                             maxLines: 1,
                             style: const TextStyle(
                                 color: Colors.white54,
@@ -309,7 +342,7 @@ class _MoviePageState extends State<MoviePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          model.movieRating!,
+                          "8.5",
                           maxLines: 1,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
@@ -395,5 +428,12 @@ class _MoviePageState extends State<MoviePage> {
           borderRadius: BorderRadius.circular(AppSize.s20)
         ),
     );
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    _pageController.dispose();
+    super.dispose();
   }
 }
