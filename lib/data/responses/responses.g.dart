@@ -178,3 +178,43 @@ Map<String, dynamic> _$PaginatedMoviesResponseToJson(
       'message': instance.message,
       'result': instance.result,
     };
+
+CommentResult _$CommentResultFromJson(Map<String, dynamic> json) =>
+    CommentResult(
+      json['id'] as String?,
+      json['movieId'] as String?,
+      json['userId'] as String?,
+      json['username'] as String?,
+      json['content'] as String?,
+      json['created'] as String?,
+      json['createdDate'] as String?,
+      json['modifiedDate'] as String?,
+    );
+
+Map<String, dynamic> _$CommentResultToJson(CommentResult instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'movieId': instance.movieId,
+      'userId': instance.userId,
+      'username': instance.username,
+      'content': instance.content,
+      'created': instance.created,
+      'createdDate': instance.createdDate,
+      'modifiedDate': instance.modifiedDate,
+    };
+
+CommentResponse _$CommentResponseFromJson(Map<String, dynamic> json) =>
+    CommentResponse(
+      (json['code'] as num?)?.toInt(),
+      json['message'] as String?,
+      json['result'] == null
+          ? null
+          : CommentResult.fromJson(json['result'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CommentResponseToJson(CommentResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'result': instance.result,
+    };

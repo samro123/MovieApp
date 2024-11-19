@@ -8,12 +8,14 @@ import 'package:movie_video/data/network/dio_factory.dart';
 import 'package:movie_video/data/network/network_info.dart';
 import 'package:movie_video/data/repository/repository_Impl.dart';
 import 'package:movie_video/domain/repository/repository.dart';
+import 'package:movie_video/domain/usecase/comment_usecase.dart';
 import 'package:movie_video/domain/usecase/forgot_password_usecase.dart';
 import 'package:movie_video/domain/usecase/login_usecase.dart';
 import 'package:movie_video/domain/usecase/paginated_movies_usecase.dart';
 import 'package:movie_video/domain/usecase/register_usecase.dart';
 import 'package:movie_video/presentation/forgot_password/forgot_password_viewmodel.dart';
 import 'package:movie_video/presentation/login/login_viewmodel.dart';
+import 'package:movie_video/presentation/main/comment/comment_viewmodel.dart';
 import 'package:movie_video/presentation/main/movie/movie_viewmodel.dart';
 import 'package:movie_video/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,11 +61,17 @@ initPaginatedMoviesModule(){
     instance.registerFactory<PaginatedMoviesViewModel>(() => PaginatedMoviesViewModel(instance()));
   }
 }
-
+initCommentModule(){
+  if(!GetIt.I.isRegistered<CommentUseCase>()){
+    instance.registerFactory<CommentUseCase>(() => CommentUseCase(instance()));
+    instance.registerFactory<CommentViewModel>(() => CommentViewModel(instance()));
+  }
+}
 resetAllModules(){
   instance.reset(dispose: false);
   initAppModule();
   initRegisterModule();
   initLoginModule();
   initForgotPasswordModule();
+  initCommentModule();
 }

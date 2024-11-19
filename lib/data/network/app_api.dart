@@ -24,6 +24,12 @@ abstract class AppServiceClient{
       @Field("lastName") String lastName,
       @Field("dob") String dob
       );
+
+  @POST("/comment/{movieId}")
+  Future<CommentResponse> comment(
+      @Path("movieId") String movieId,
+      @Body() Map<String, dynamic> body,
+      );
   
   @GET("/movie/lists")
   Future<PaginatedMoviesResponse> getPaginatedMovies(

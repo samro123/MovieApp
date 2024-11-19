@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie_video/app/di.dart';
 import 'package:movie_video/data/movie.dart';
+import 'package:movie_video/presentation/main/comment/comment_viewmodel.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
 import 'package:movie_video/presentation/resources/value_manager.dart';
@@ -16,6 +18,19 @@ class CommentPage extends StatefulWidget {
 
 class _CommentPageState extends State<CommentPage> {
   List<MovieModel> _popularItems = List.of(popularImages);
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _commentTextEditingController = TextEditingController();
+  final CommentViewModel _viewModel = instance<CommentViewModel>();
+  _bind(){
+    _commentTextEditingController.addListener(
+            () => _viewModel.setCommentContent(_commentTextEditingController.text));
+    _viewModel.setMovieIdPath("66ffa352b21e0d2bd6420a8a");
+  }
+  @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -144,23 +159,31 @@ class _CommentPageState extends State<CommentPage> {
                       onPressed: (){},
                       icon: const Icon(Icons.emoji_emotions,)
                   ),
-                  Expanded(child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      hintText: AppString.typeSomething,
-                      hintStyle: TextStyle(color: ColorManager.black),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none
-                    ),
-                  ))
+                  Form(
+                    key: _formKey,
+                    child: Expanded(child: TextFormField(
+                      controller: _commentTextEditingController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      style: TextStyle(color: ColorManager.black),
+                      decoration: InputDecoration(
+                        hintText: AppString.typeSomething,
+                        hintStyle: TextStyle(color: ColorManager.black),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none
+                      ),
+                    )),
+                  )
                 ],
               ),
             )
         ),
         MaterialButton(
-          onPressed: (){},
+          onPressed: (){
+            _viewModel.comment();
+            _commentTextEditingController.clear();
+          },
           minWidth: 0,
           color: Colors.lightGreen,
           padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
@@ -188,5 +211,10 @@ class _CommentPageState extends State<CommentPage> {
       },
       ),
     );
+  }
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 }

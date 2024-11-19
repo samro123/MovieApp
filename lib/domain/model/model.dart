@@ -24,6 +24,23 @@ class RegisterAuthentication{
   RegisterAuthentication(this.id, this.username, this.roles);
 }
 
+class Comment{
+  String id;
+  String movieId;
+  String userId;
+  String username;
+  String content;
+  String created;
+  String createdDate;
+  String modifiedDate;
+  Comment(
+      this.id, this.movieId,
+      this.userId, this.username,
+      this.content, this.created,
+      this.createdDate, this.modifiedDate
+  );
+}
+
 class Movies{
   String id;
   String title;

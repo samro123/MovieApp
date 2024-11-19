@@ -80,6 +80,27 @@ class RepositoryImpl extends Repository{
   }
 
   @override
+  Future<Either<Failure, Comment>> comment(String movieId, String comment) async{
+    if(await _networkInfo.isConnected){
+      try{
+        final response = await _remoteDataSource.comment(movieId, comment);
+        if(response.code == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(response.code ?? ResponseCode.DEFAULT,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      }catch(error, stackTrace){
+        print('Caught exception: $error');
+        print('Stack track: $stackTrace');
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, PaginatedMovies>> getPaginatedMovies(int page, int size) async {
     try{
       final response = await _localDataSource.getMovie();
@@ -104,4 +125,6 @@ class RepositoryImpl extends Repository{
       }
     }
   }
+
+
 }

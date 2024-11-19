@@ -64,3 +64,16 @@ extension PaginatedMoviesResponseMapper on PaginatedMoviesResponse?{
     );
   }
 }
+extension CommentResponseMapper on CommentResponse?{
+  Comment toDomain(){
+    return Comment(
+        this?.result?.id?.orEmpty() ?? EMPTY,
+        this?.result?.movieId?.orEmpty() ?? EMPTY,
+        this?.result?.userId?.orEmpty() ?? EMPTY,
+        this?.result?.username?.orEmpty() ?? EMPTY,
+        this?.result?.content?.orEmpty() ?? EMPTY,
+        this?.result?.created?.orEmpty() ?? EMPTY,
+        this?.result?.createdDate?.orEmpty() ?? EMPTY,
+        this?.result?.modifiedDate?.orEmpty() ?? EMPTY,);
+  }
+}

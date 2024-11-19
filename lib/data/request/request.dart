@@ -12,3 +12,8 @@ class RegisterRequest{
   String dob;
   RegisterRequest(this.username, this.password, this.firstName, this.lastName, this.dob);
 }
+
+class CommentRequest{
+  String content;
+  CommentRequest(this.content);
+}

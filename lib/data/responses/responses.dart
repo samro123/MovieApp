@@ -205,3 +205,53 @@ class PaginatedMoviesResponse extends BaseResponse{
       _$PaginatedMoviesResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedMoviesResponseToJson(this);
 }
+
+// Comment
+@JsonSerializable()
+class CommentResult{
+  @JsonKey(name: "id")
+  String? id;
+
+  @JsonKey(name: "movieId")
+  String? movieId;
+
+  @JsonKey(name: "userId")
+  String? userId;
+
+  @JsonKey(name: "username")
+  String? username;
+
+  @JsonKey(name: "content")
+  String? content;
+
+  @JsonKey(name: "created")
+  String? created;
+
+  @JsonKey(name: "createdDate")
+  String? createdDate;
+
+  @JsonKey(name: "modifiedDate")
+  String? modifiedDate;
+
+  CommentResult(
+      this.id, this.movieId,
+      this.userId, this.username,
+      this.content, this.created,
+      this.createdDate, this.modifiedDate
+      );
+
+  factory CommentResult.fromJson(Map<String, dynamic> json) =>
+      _$CommentResultFromJson(json);
+  Map<String, dynamic> toJson() => _$CommentResultToJson(this);
+}
+
+@JsonSerializable()
+class CommentResponse extends BaseResponse{
+  @JsonKey(name: "result")
+  CommentResult? result;
+  CommentResponse(int? code, String? message, this.result) : super(code, message);
+
+  factory CommentResponse.fromJson(Map<String, dynamic> json) =>
+      _$CommentResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$CommentResponseToJson(this);
+}

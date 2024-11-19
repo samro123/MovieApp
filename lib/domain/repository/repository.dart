@@ -7,4 +7,5 @@ abstract class Repository{
   Future<Either<Failure, String>> forgotPassword(String email);
   Future<Either<Failure, RegisterAuthentication>> register(RegisterRequest registerRequest);
   Future<Either<Failure, PaginatedMovies>> getPaginatedMovies(int page, int size);
+  Future<Either<Failure, Comment>> comment(String movieId, String comment);
 }
