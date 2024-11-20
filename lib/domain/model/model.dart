@@ -41,6 +41,11 @@ class Comment{
   );
 }
 
+class GetComments{
+  List<Comment> comments;
+  GetComments(this.comments);
+}
+
 class Movies{
   String id;
   String title;
@@ -73,3 +78,5 @@ class PaginatedMovies{
       this.movies
       );
 }
+
+

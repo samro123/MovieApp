@@ -126,5 +126,30 @@ class RepositoryImpl extends Repository{
     }
   }
 
+  @override
+  Future<Either<Failure, GetComments>> getComments(String movieId) async{
+    try{
+      final response = await _localDataSource.getComment();
+      return Right(response.toDomain());
+    }catch(cacheError){
+      if(await _networkInfo.isConnected){
+        try{
+          final response = await _remoteDataSource.getComment(movieId);
+          if(response.code == ApiInternalStatus.SUCCESS){
+            _localDataSource.saveCommentToCache(response);
+            return Right(response.toDomain());
+          }else{
+            return Left(Failure(response.code ?? ResponseCode.DEFAULT,
+                response.message ?? ResponseMessage.DEFAULT));
+          }
+        }catch(error){
+          return Left(ErrorHandler.handle(error).failure);
+        }
+      }else{
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
 
 }

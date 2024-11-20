@@ -36,4 +36,9 @@ abstract class AppServiceClient{
       @Query("page") int page,
       @Query("size") int size,
       );
+
+  @GET("/comment/{movieId}")
+  Future<GetCommentResponse> getComments(
+      @Path("movieId") String movieId
+      );
 }

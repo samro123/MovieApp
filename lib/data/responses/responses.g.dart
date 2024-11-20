@@ -218,3 +218,19 @@ Map<String, dynamic> _$CommentResponseToJson(CommentResponse instance) =>
       'message': instance.message,
       'result': instance.result,
     };
+
+GetCommentResponse _$GetCommentResponseFromJson(Map<String, dynamic> json) =>
+    GetCommentResponse(
+      (json['code'] as num?)?.toInt(),
+      json['message'] as String?,
+      (json['result'] as List<dynamic>)
+          .map((e) => CommentResult.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$GetCommentResponseToJson(GetCommentResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'result': instance.result,
+    };

@@ -255,3 +255,14 @@ class CommentResponse extends BaseResponse{
       _$CommentResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CommentResponseToJson(this);
 }
+
+@JsonSerializable()
+class GetCommentResponse extends BaseResponse{
+  @JsonKey(name: "result")
+  List<CommentResult>? result;
+  GetCommentResponse(int? code, String? message, this.result) : super(code, message);
+
+  factory GetCommentResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetCommentResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$GetCommentResponseToJson(this);
+}

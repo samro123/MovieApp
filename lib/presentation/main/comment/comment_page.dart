@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie_video/app/di.dart';
 import 'package:movie_video/data/movie.dart';
+import 'package:movie_video/presentation/common/state_renderer/state_renderer_impl.dart';
 import 'package:movie_video/presentation/main/comment/comment_viewmodel.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
 import 'package:movie_video/presentation/resources/value_manager.dart';
 
+import '../../../domain/model/model.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/font_manager.dart';
 
@@ -25,6 +27,7 @@ class _CommentPageState extends State<CommentPage> {
     _commentTextEditingController.addListener(
             () => _viewModel.setCommentContent(_commentTextEditingController.text));
     _viewModel.setMovieIdPath("66ffa352b21e0d2bd6420a8a");
+    _viewModel.start();
   }
   @override
   void initState() {
@@ -59,7 +62,15 @@ class _CommentPageState extends State<CommentPage> {
               _getBackToScreenButton()
             ],
           ),
-          Expanded(child: _getBuildCommentCard()),
+           Expanded(child: StreamBuilder<FlowState>(
+              stream: _viewModel.outputState,
+              builder: (context, snapshot) {
+                return snapshot.data?.getScreenWidget(
+                    context, _getContentWidget(), (){
+
+                }) ?? Container();
+              },
+            )),
 
           _getCommentInput()
         ],
@@ -67,84 +78,104 @@ class _CommentPageState extends State<CommentPage> {
     );
   }
 
-  Widget _getBuildCommentCard(){
-    return Container(
-      height: AppSize.s160,
-      child: ListView.builder(
-        itemCount: _popularItems[0].comments!.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return Container(
-            width: 300,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppSize.s20),
-                color: ColorManager.grey
-            ),
-            margin: const EdgeInsets.only(top: AppMargin.m15),
-            padding: const EdgeInsets.symmetric(vertical: AppPadding.p10, horizontal: AppPadding.p20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: AppSize.s50,
-                          width: AppSize.s50,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(popularImages[0].comments![index]['imageUrl'].toString(),)
-                              )
-
-                          ),
-                        ),
-                        const SizedBox(width: AppSize.s10,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(_popularItems[0].comments![index]['name'],
-                              style: TextStyle(color: ColorManager.white, fontWeight: FontWeightManager.bold),
-                            ),
-                            const SizedBox(height: AppSize.s5,),
-                            Text(_popularItems[0].comments![index]['date'],
-                              style: TextStyle(color: ColorManager.grey1),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(_popularItems[0].comments![index]['rating'],
-                          style: TextStyle(color: ColorManager.white, fontWeight: FontWeightManager.bold),
-                        ),
-                        const SizedBox(width: 4,),
-                        Icon(Icons.star,size: AppSize.s12,color: ColorManager.yellow,)
-                      ],
-                    )
-                  ],
-                ),
-                Padding(
-                  padding:const EdgeInsets.symmetric(vertical: AppPadding.p10),
-                  child: Text(
-                    _popularItems[0].comments![index]['comment'],
-                    maxLines: 3,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.clip,
-                    style:  TextStyle(color: ColorManager.white),
-                  ),
-                )
-
-              ],
-            ),
-          );
-        },),
+  Widget _getContentWidget(){
+    return StreamBuilder<CommentsViewObject>(
+        stream: _viewModel.outputCommentsData,
+        builder: (context, snapshot) {
+          return _getBuildCommentCard(snapshot.data?.comments);
+        },
     );
+  }
+
+  Widget _getBuildCommentCard(List<Comment>? comments){
+    if(comments != null) {
+      return Container(
+        height: AppSize.s160,
+        child: ListView.builder(
+          itemCount: comments.length,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return Container(
+              width: 300,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppSize.s20),
+                  color: ColorManager.grey
+              ),
+              margin: const EdgeInsets.only(top: AppMargin.m15),
+              padding: const EdgeInsets.symmetric(
+                  vertical: AppPadding.p10, horizontal: AppPadding.p20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: AppSize.s50,
+                            width: AppSize.s50,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: AssetImage(popularImages[0]
+                                        .comments![0]['imageUrl']
+                                        .toString(),)
+                                )
+
+                            ),
+                          ),
+                          const SizedBox(width: AppSize.s10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(comments[index].username,
+                                style: TextStyle(color: ColorManager.white,
+                                    fontWeight: FontWeightManager.bold),
+                              ),
+                              const SizedBox(height: AppSize.s5,),
+                              Text(comments[index].created,
+                                style: TextStyle(color: ColorManager.grey1),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(_popularItems[0].comments![0]['rating'],
+                            style: TextStyle(color: ColorManager.white,
+                                fontWeight: FontWeightManager.bold),
+                          ),
+                          const SizedBox(width: 4,),
+                          Icon(Icons.star, size: AppSize.s12,
+                            color: ColorManager.yellow,)
+                        ],
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: AppPadding.p10),
+                    child: Text(
+                      comments[index].content,
+                      maxLines: 3,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.clip,
+                      style: TextStyle(color: ColorManager.white),
+                    ),
+                  )
+
+                ],
+              ),
+            );
+          },),
+      );
+    }else{
+      return Container();
+    }
   }
 
   Widget _getCommentInput(){

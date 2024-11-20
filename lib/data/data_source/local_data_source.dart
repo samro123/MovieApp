@@ -1,12 +1,15 @@
 import 'package:movie_video/data/network/error_handler.dart';
 import 'package:movie_video/data/responses/responses.dart';
 
-const CACHE_MOVIE_KEY = "CACHE_HOME_KEY";
-const CACHE_MOVIE_INTERVAL = 60 * 1000;
+const CACHE_MOVIE_KEY = "CACHE_MOVIE_KEY";
+const CACHE_COMMENT_KEY = "CACHE_COMMENT_KEY";
+const CACHE_INTERVAL = 60 * 1000;
 
 abstract class LocalDataSource{
   Future<PaginatedMoviesResponse> getMovie();
+  Future<GetCommentResponse> getComment();
   Future<void> saveMovieToCache(PaginatedMoviesResponse paginatedMoviesResponse);
+  Future<void> saveCommentToCache(GetCommentResponse getCommentResponse);
   void clearCache();
   void removeFromCache(String key);
 }
@@ -18,7 +21,7 @@ class LocalDataSourceImplementer implements LocalDataSource{
   @override
   Future<PaginatedMoviesResponse> getMovie() async{
     CachedItem? cachedItem = cacheMap[CACHE_MOVIE_KEY];
-    if(cachedItem != null && cachedItem.isValid(CACHE_MOVIE_INTERVAL)){
+    if(cachedItem != null && cachedItem.isValid(CACHE_INTERVAL)){
       return cachedItem.data;
     }else{
       throw ErrorHandler.handle(DataSource.CACHE_ERROR);
@@ -31,8 +34,23 @@ class LocalDataSourceImplementer implements LocalDataSource{
   }
 
   @override
+  Future<GetCommentResponse> getComment() async{
+    CachedItem? cacheItem = cacheMap[CACHE_COMMENT_KEY];
+    if(cacheItem != null && cacheItem.isValid(CACHE_INTERVAL)){
+      return cacheItem.data;
+    }else{
+      throw ErrorHandler.handle(DataSource.CACHE_ERROR);
+    }
+  }
+
+  @override
+  Future<void> saveCommentToCache(GetCommentResponse getCommentResponse) async{
+    cacheMap[CACHE_COMMENT_KEY] = CachedItem(getCommentResponse);
+  }
+
+  @override
   void removeFromCache(String key) {
-      cacheMap.remove(key);
+    cacheMap.remove(key);
   }
 
   @override

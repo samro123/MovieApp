@@ -77,3 +77,24 @@ extension CommentResponseMapper on CommentResponse?{
         this?.result?.modifiedDate?.orEmpty() ?? EMPTY,);
   }
 }
+extension CommentResultMapper on CommentResult? {
+  Comment toDomain() {
+    return Comment(
+      this?.id?.orEmpty() ?? EMPTY,
+      this?.movieId?.orEmpty() ?? EMPTY,
+      this?.userId?.orEmpty() ?? EMPTY,
+      this?.username?.orEmpty() ?? EMPTY,
+      this?.content?.orEmpty() ?? EMPTY,
+      this?.created?.orEmpty() ?? EMPTY,
+      this?.createdDate?.orEmpty() ?? EMPTY,
+      this?.modifiedDate?.orEmpty() ?? EMPTY,
+    );
+  }
+}
+extension GetCommentResponseMapper on GetCommentResponse?{
+  GetComments toDomain(){
+    List<Comment> mappedComments = (this?.result?.map((commentResponse) => commentResponse.toDomain())
+        ?? Iterable.empty()).cast<Comment>().toList();
+    return GetComments(mappedComments);
+  }
+}

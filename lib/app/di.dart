@@ -64,7 +64,8 @@ initPaginatedMoviesModule(){
 initCommentModule(){
   if(!GetIt.I.isRegistered<CommentUseCase>()){
     instance.registerFactory<CommentUseCase>(() => CommentUseCase(instance()));
-    instance.registerFactory<CommentViewModel>(() => CommentViewModel(instance()));
+    instance.registerFactory<GetCommentUseCase>(() => GetCommentUseCase(instance()));
+    instance.registerFactory<CommentViewModel>(() => CommentViewModel(instance(), instance()));
   }
 }
 resetAllModules(){
