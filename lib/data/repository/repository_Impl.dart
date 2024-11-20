@@ -151,5 +151,24 @@ class RepositoryImpl extends Repository{
     }
   }
 
+  @override
+  Future<Either<Failure, String>> logout(String token) async{
+    if(await _networkInfo.isConnected){
+      try{
+        final response = await _remoteDataSource.logout(token);
+        if(response.code == ApiInternalStatus.SUCCESS){
+          return Right(response.code.toString());
+        }else{
+          return Left(Failure(response.code ?? ResponseCode.DEFAULT,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      }catch(error){
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
 
 }

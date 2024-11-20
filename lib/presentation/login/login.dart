@@ -27,7 +27,6 @@ class _LoginViewState extends State<LoginView> {
   AppPreferences _appPreferences = instance<AppPreferences>();
 
   _bind(){
-    _viewModel.start();
     _usernameController.addListener(()=> _viewModel.setUserName(_usernameController.text));
     _passwordController.addListener(()=> _viewModel.setPassword(_passwordController.text));
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream.
@@ -36,9 +35,10 @@ class _LoginViewState extends State<LoginView> {
             _appPreferences.setIsUserLoggedIn();
             _appPreferences.setToken(token);
             resetAllModules();
-            Navigator.of(context).pushReplacementNamed(Routes.forgotPasswordRoute);
+            Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
           });
     });
+    _viewModel.start();
   }
   @override
   void initState() {

@@ -6,7 +6,7 @@ import 'package:movie_video/presentation/main/movie/movie_page.dart';
 import 'package:movie_video/presentation/main/notifications_page.dart';
 import 'package:movie_video/presentation/main/profile_page.dart';
 import 'package:movie_video/presentation/main/search_page.dart';
-import 'package:movie_video/presentation/main/settings_page.dart';
+import 'package:movie_video/presentation/main/settings/settings_page.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
 import 'package:movie_video/presentation/resources/value_manager.dart';

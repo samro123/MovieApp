@@ -7,6 +7,7 @@ import 'package:movie_video/presentation/details_movie/details_movie.dart';
 import 'package:movie_video/presentation/main/movie/movie_viewmodel.dart';
 import 'package:movie_video/presentation/resources/assets_manager.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
+import 'package:movie_video/presentation/resources/route_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
 import 'package:movie_video/presentation/resources/value_manager.dart';
 
@@ -25,6 +26,8 @@ class _MoviePageState extends State<MoviePage> {
   PageController _pageController = PageController(initialPage: 0, viewportFraction: 0.9);
   PaginatedMoviesViewModel _viewModel = instance<PaginatedMoviesViewModel>();
   int currentPage =0;
+  final ScrollController scrollController = ScrollController();
+  final List<Movies> pageMovies = [];
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _MoviePageState extends State<MoviePage> {
   }
 
   _bind(){
+    scrollController.addListener(loadMoreData);
     _viewModel.start();
   }
 
@@ -67,6 +71,10 @@ class _MoviePageState extends State<MoviePage> {
     return StreamBuilder<PaginatedMoviesViewObject>(
         stream: _viewModel.outputPaginatedMoviesData,
         builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data?.paginatedMove != null) {
+            // Cập nhật danh sách mà không cần dùng setState()
+            pageMovies.addAll(snapshot.data!.paginatedMove);
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -215,7 +223,7 @@ class _MoviePageState extends State<MoviePage> {
                   ],
                 ),
               ),
-              _getMoviePopulars(snapshot.data?.paginatedMove),
+              _getMoviePopulars(pageMovies),
 
             ],
           );
@@ -271,6 +279,7 @@ class _MoviePageState extends State<MoviePage> {
         height: AppHeight.h27(context),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
+          controller: scrollController,
           itemCount: movies.length,
           itemBuilder: (context, index) {
             return _getCustomCardNormal(
@@ -287,7 +296,7 @@ class _MoviePageState extends State<MoviePage> {
   Widget _getCustomCardNormal(Movies movies){
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const MovieDetail(),));
+        Navigator.of(context).pushNamed(Routes.movieDetailsRoute);
       },
       child: Stack(
         children: [
@@ -428,6 +437,13 @@ class _MoviePageState extends State<MoviePage> {
           borderRadius: BorderRadius.circular(AppSize.s20)
         ),
     );
+  }
+
+  void loadMoreData(){
+    if (scrollController.position.pixels >=
+        scrollController.position.maxScrollExtent) {
+      _viewModel.inputPage.add(pageMovies.length ~/ 10); // Tăng page số
+    }
   }
 
   @override

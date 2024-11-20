@@ -9,4 +9,5 @@ abstract class Repository{
   Future<Either<Failure, PaginatedMovies>> getPaginatedMovies(int page, int size);
   Future<Either<Failure, Comment>> comment(String movieId, String comment);
   Future<Either<Failure, GetComments>> getComments(String movieId);
+  Future<Either<Failure, String>> logout(String token);
 }

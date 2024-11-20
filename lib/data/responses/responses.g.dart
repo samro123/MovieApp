@@ -223,8 +223,8 @@ GetCommentResponse _$GetCommentResponseFromJson(Map<String, dynamic> json) =>
     GetCommentResponse(
       (json['code'] as num?)?.toInt(),
       json['message'] as String?,
-      (json['result'] as List<dynamic>)
-          .map((e) => CommentResult.fromJson(e as Map<String, dynamic>))
+      (json['result'] as List<dynamic>?)
+          ?.map((e) => CommentResult.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

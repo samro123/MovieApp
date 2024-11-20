@@ -30,6 +30,11 @@ abstract class AppServiceClient{
       @Path("movieId") String movieId,
       @Body() Map<String, dynamic> body,
       );
+
+  @POST("/identity/auth/logout")
+  Future<BaseResponse> logout(
+      @Field("token") String token
+      );
   
   @GET("/movie/lists")
   Future<PaginatedMoviesResponse> getPaginatedMovies(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_video/app/di.dart';
+import 'package:movie_video/presentation/details_movie/details_movie.dart';
 import 'package:movie_video/presentation/forgot_password/forgot_password.dart';
 import 'package:movie_video/presentation/login/login.dart';
 import 'package:movie_video/presentation/main/main_view.dart';
@@ -15,6 +16,7 @@ class Routes {
   static const String registerRoute = '/register';
   static const String mainRoute = '/main';
   static const String onBoardingRoute = '/onBoarding';
+  static const String movieDetailsRoute = "/movieDetails";
 }
 
 class RouteGenerator {
@@ -31,9 +33,11 @@ class RouteGenerator {
         initRegisterModule();
         return MaterialPageRoute(builder: (_) => RegisterView());
       case Routes.mainRoute:
-        initPaginatedMoviesModule();
-        initCommentModule();
+        initMainModule();
         return MaterialPageRoute(builder: (_) => MainView());
+      case Routes.movieDetailsRoute:
+        initCommentModule();
+        return MaterialPageRoute(builder: (_) => MovieDetail());
       case Routes.forgotPasswordRoute:
         initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => ForgotPasswordView());

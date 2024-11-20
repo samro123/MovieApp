@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_video/app/app_prefs.dart';
 import 'package:movie_video/app/di.dart';
+import 'package:movie_video/data/data_source/local_data_source.dart';
+import 'package:movie_video/presentation/main/settings/logout_viewmodel.dart';
 import 'package:movie_video/presentation/resources/assets_manager.dart';
+import 'package:movie_video/presentation/resources/route_manager.dart';
 import 'package:movie_video/presentation/resources/strings_manager.dart';
 import 'package:movie_video/presentation/resources/value_manager.dart';
 
@@ -15,6 +18,19 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   AppPreferences _appPreferences = instance<AppPreferences>();
+  LocalDataSource _localDataSource = instance<LocalDataSource>();
+  final LogoutViewModel _viewModel = instance<LogoutViewModel>();
+
+  _bind()async {
+    String token = await _appPreferences.getToken();
+    _viewModel.setToken(token);
+  }
+
+  @override
+  void initState() {
+    _bind();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -92,6 +108,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _logout(){
-
+    _appPreferences.logout();
+    _localDataSource.clearCache();
+    _viewModel.logout();
+    Navigator.pushReplacementNamed(context, Routes.loginRoute);
   }
 }
