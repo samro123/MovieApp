@@ -8,7 +8,7 @@ extension AuthenticationResponseMapper on AuthenticationResponse?{
   Authentication toDomain(){
     return Authentication(
         this?.result?.token?.orEmpty() ?? EMPTY,
-        (this?.result?.authenticated ?? false)
+        this?.result?.expiryTime.orEmpty() ?? EMPTY
     );
   }
 }
@@ -72,6 +72,7 @@ extension CommentResponseMapper on CommentResponse?{
         this?.result?.userId?.orEmpty() ?? EMPTY,
         this?.result?.username?.orEmpty() ?? EMPTY,
         this?.result?.content?.orEmpty() ?? EMPTY,
+        this?.result?.avatar?.orEmpty() ?? EMPTY,
         this?.result?.created?.orEmpty() ?? EMPTY,
         this?.result?.createdDate?.orEmpty() ?? EMPTY,
         this?.result?.modifiedDate?.orEmpty() ?? EMPTY,);
@@ -85,6 +86,7 @@ extension CommentResultMapper on CommentResult? {
       this?.userId?.orEmpty() ?? EMPTY,
       this?.username?.orEmpty() ?? EMPTY,
       this?.content?.orEmpty() ?? EMPTY,
+      this?.avatar?.orEmpty() ?? EMPTY,
       this?.created?.orEmpty() ?? EMPTY,
       this?.createdDate?.orEmpty() ?? EMPTY,
       this?.modifiedDate?.orEmpty() ?? EMPTY,
@@ -96,5 +98,16 @@ extension GetCommentResponseMapper on GetCommentResponse?{
     List<Comment> mappedComments = (this?.result?.map((commentResponse) => commentResponse.toDomain())
         ?? Iterable.empty()).cast<Comment>().toList();
     return GetComments(mappedComments);
+  }
+}
+extension ProfileResponseMapper on ProfileResponse?{
+  Profile toDomain(){
+    return Profile(
+        this?.result?.username?.orEmpty() ?? EMPTY,
+        this?.result?.firstName?.orEmpty() ?? EMPTY,
+        this?.result?.lastName?.orEmpty() ?? EMPTY,
+        this?.result?.avatar?.orEmpty() ?? EMPTY,
+        this?.result?.dob?.orEmpty() ?? EMPTY,
+        this?.result?.city?.orEmpty() ?? EMPTY);
   }
 }

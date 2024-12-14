@@ -20,13 +20,13 @@ Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
 ResultResponse _$ResultResponseFromJson(Map<String, dynamic> json) =>
     ResultResponse(
       json['token'] as String?,
-      json['authenticated'] as bool?,
+      json['expiryTime'] as String?,
     );
 
 Map<String, dynamic> _$ResultResponseToJson(ResultResponse instance) =>
     <String, dynamic>{
       'token': instance.token,
-      'authenticated': instance.authenticated,
+      'expiryTime': instance.expiryTime,
     };
 
 AuthenticationResponse _$AuthenticationResponseFromJson(
@@ -186,6 +186,7 @@ CommentResult _$CommentResultFromJson(Map<String, dynamic> json) =>
       json['userId'] as String?,
       json['username'] as String?,
       json['content'] as String?,
+      json['avatar'] as String?,
       json['created'] as String?,
       json['createdDate'] as String?,
       json['modifiedDate'] as String?,
@@ -198,6 +199,7 @@ Map<String, dynamic> _$CommentResultToJson(CommentResult instance) =>
       'userId': instance.userId,
       'username': instance.username,
       'content': instance.content,
+      'avatar': instance.avatar,
       'created': instance.created,
       'createdDate': instance.createdDate,
       'modifiedDate': instance.modifiedDate,
@@ -229,6 +231,45 @@ GetCommentResponse _$GetCommentResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$GetCommentResponseToJson(GetCommentResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'result': instance.result,
+    };
+
+ProfileResultResponse _$ProfileResultResponseFromJson(
+        Map<String, dynamic> json) =>
+    ProfileResultResponse(
+      json['username'] as String?,
+      json['firstName'] as String?,
+      json['lastName'] as String?,
+      json['avatar'] as String?,
+      json['dob'] as String?,
+      json['city'] as String?,
+    );
+
+Map<String, dynamic> _$ProfileResultResponseToJson(
+        ProfileResultResponse instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'avatar': instance.avatar,
+      'dob': instance.dob,
+      'city': instance.city,
+    };
+
+ProfileResponse _$ProfileResponseFromJson(Map<String, dynamic> json) =>
+    ProfileResponse(
+      (json['code'] as num?)?.toInt(),
+      json['message'] as String?,
+      json['result'] == null
+          ? null
+          : ProfileResultResponse.fromJson(
+              json['result'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,

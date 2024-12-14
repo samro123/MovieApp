@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_video/data/movie.dart';
+import 'package:movie_video/domain/model/model.dart';
 import 'package:movie_video/presentation/main/comment/comment_page.dart';
 import 'package:movie_video/presentation/resources/color_manager.dart';
 import 'package:movie_video/presentation/resources/font_manager.dart';
@@ -8,7 +9,8 @@ import 'package:movie_video/presentation/resources/value_manager.dart';
 import 'package:readmore/readmore.dart';
 
 class MovieDetail extends StatefulWidget {
-  const MovieDetail({Key? key}) : super(key: key);
+  final Movies movie;
+  const MovieDetail({Key? key, required this.movie}) : super(key: key);
 
   @override
   State<MovieDetail> createState() => _MovieDetailState();
@@ -39,8 +41,7 @@ class _MovieDetailState extends State<MovieDetail> {
                   ),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                          image: AssetImage(
-                              popularItems[0].imageAsset.toString()),
+                          image: NetworkImage(widget.movie.posterUrl),
                       fit: BoxFit.cover
                       ),
                   )
@@ -59,7 +60,7 @@ class _MovieDetailState extends State<MovieDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                AppString.dune,
+                                widget.movie.title,
                                 style: TextStyle(
                                   color: ColorManager.white,fontSize: AppSize.s30, fontWeight: FontWeight.w600
                                 ),
@@ -100,7 +101,7 @@ class _MovieDetailState extends State<MovieDetail> {
                        Padding(
                           padding: EdgeInsets.symmetric(vertical: AppPadding.p10, horizontal: AppPadding.p10),
                           child: ReadMoreText(
-                            AppString.onBoardingSubTitle1,
+                            widget.movie.description,
                             trimLines: 3,
                             trimMode: TrimMode.Line,
                             moreStyle: TextStyle(color: ColorManager.grey),
@@ -181,7 +182,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),)
                               ],
                             ),
-                            _getBuildCommentCard(),
+                            _getBuildCommentCard(widget.movie),
                             SizedBox(height: AppHeight.h15(context),)
                           ],
                         ),
@@ -225,7 +226,7 @@ class _MovieDetailState extends State<MovieDetail> {
     );
   }
 
-  Widget _getBuildCommentCard(){
+  Widget _getBuildCommentCard(Movies movie){
     return Container(
       margin: const EdgeInsets.symmetric(vertical: AppMargin.m20),
       height: AppSize.s160,
@@ -244,7 +245,7 @@ class _MovieDetailState extends State<MovieDetail> {
                         padding: const EdgeInsets.only(top: AppPadding.p16, bottom: AppPadding.p10),
                         child: Container(
                           height: AppHeight.h85(context),
-                          child: CommentPage(),
+                          child: CommentPage(movie: movie,),
                         ),
                       );
                     },

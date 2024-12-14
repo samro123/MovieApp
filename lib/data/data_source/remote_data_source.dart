@@ -10,6 +10,8 @@ abstract class RemoteDataSource{
   Future<CommentResponse> comment(String movieId, String comment);
   Future<GetCommentResponse> getComment(String movieId);
   Future<BaseResponse> logout(String token);
+  Future<ProfileResponse> updateProfile(ProfileRequest profileRequest);
+  Future<ProfileResponse> getProfile();
 }
 class RemoteDataSourceImplementer implements RemoteDataSource{
   AppServiceClient _appServiceClient;
@@ -57,5 +59,21 @@ class RemoteDataSourceImplementer implements RemoteDataSource{
   @override
   Future<BaseResponse> logout(String token) async{
     return await _appServiceClient.logout(token);
+  }
+
+  @override
+  Future<ProfileResponse> updateProfile(ProfileRequest profileRequest) async{
+    return await _appServiceClient.updateProfile(
+        profileRequest.username,
+        profileRequest.firstName,
+        profileRequest.lastName,
+        profileRequest.avatar,
+        profileRequest.dob,
+        profileRequest.city);
+  }
+
+  @override
+  Future<ProfileResponse> getProfile() async{
+    return await _appServiceClient.getProfile();
   }
 }

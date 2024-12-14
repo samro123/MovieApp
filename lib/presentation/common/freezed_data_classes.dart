@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'freezed_data_classes.freezed.dart';
 @freezed
@@ -11,4 +14,12 @@ class RegisterObject with _$RegisterObject{
       String firstName, String lastName,
       String dob
       ) = _RegisterObject;
+}
+@freezed
+class ProfileObject with _$ProfileObject{
+  factory ProfileObject(
+      String username, String firstName,
+      String lastName, MultipartFile avatar, String dob,
+      String city
+      ) = _ProfileObject;
 }

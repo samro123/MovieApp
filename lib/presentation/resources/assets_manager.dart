@@ -2,6 +2,8 @@ const String IMAGE_PATH = "assets/images";
 const String IMAGE_DATA_PATH = "assets/data";
 const String JSON_PATH = "assets/json";
 class ImageAssets{
+  static const String camera = "$IMAGE_PATH/camera.png";
+  static const String addImage = "$IMAGE_PATH/add_image.png";
   static const String splashLogo = "$IMAGE_PATH/movie.png";
   static const String facebookLogo = "$IMAGE_PATH/facebook.png";
   static const String appleLogo = "$IMAGE_PATH/apple.png";

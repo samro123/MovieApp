@@ -10,4 +10,6 @@ abstract class Repository{
   Future<Either<Failure, Comment>> comment(String movieId, String comment);
   Future<Either<Failure, GetComments>> getComments(String movieId);
   Future<Either<Failure, String>> logout(String token);
+  Future<Either<Failure, Profile>> updateProfile(ProfileRequest profileRequest);
+  Future<Either<Failure, Profile>> getProfile();
 }

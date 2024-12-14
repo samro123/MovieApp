@@ -209,8 +209,6 @@ class RegisterViewModel extends BaseViewModel
     inputAllInputsValid.add(null);
   }
 
-
-
 }
 
 abstract class RegisterViewModelInput{

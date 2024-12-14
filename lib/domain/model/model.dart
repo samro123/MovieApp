@@ -6,8 +6,8 @@ class SliderObject {
 }
 class Authentication{
   String token;
-  bool authenticated;
-  Authentication(this.token, this.authenticated);
+  String expiryTime;
+  Authentication(this.token, this.expiryTime);
 }
 
 class Roles{
@@ -30,13 +30,14 @@ class Comment{
   String userId;
   String username;
   String content;
+  String avatar;
   String created;
   String createdDate;
   String modifiedDate;
   Comment(
       this.id, this.movieId,
       this.userId, this.username,
-      this.content, this.created,
+      this.content, this.avatar, this.created,
       this.createdDate, this.modifiedDate
   );
 }
@@ -77,6 +78,16 @@ class PaginatedMovies{
       this.pageSize, this.totalElements,
       this.movies
       );
+}
+
+class Profile{
+  String username;
+  String firstName;
+  String lastName;
+  String avatar;
+  String dob;
+  String city;
+  Profile(this.username, this.firstName, this.lastName, this.avatar, this.dob, this.city);
 }
 
 

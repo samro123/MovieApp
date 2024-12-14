@@ -23,7 +23,7 @@ class PaginatedMoviesViewModel extends BaseViewModel
 
   @override
   void start() {
-    _pageStreamController.sink.add(0);
+    _pageStreamController.sink.add(1);
     _sizeStreamController.sink.add(10);
   }
 

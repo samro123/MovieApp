@@ -12,7 +12,8 @@ import '../../resources/assets_manager.dart';
 import '../../resources/font_manager.dart';
 
 class CommentPage extends StatefulWidget {
-  const CommentPage({Key? key}) : super(key: key);
+  final Movies movie;
+  const CommentPage({Key? key, required this.movie}) : super(key: key);
 
   @override
   State<CommentPage> createState() => _CommentPageState();
@@ -26,8 +27,9 @@ class _CommentPageState extends State<CommentPage> {
   _bind(){
     _commentTextEditingController.addListener(
             () => _viewModel.setCommentContent(_commentTextEditingController.text));
-    _viewModel.setMovieIdPath("66ffa352b21e0d2bd6420a8a");
+    _viewModel.setMovieIdPath(widget.movie.id);
     _viewModel.start();
+
   }
   @override
   void initState() {
@@ -214,6 +216,7 @@ class _CommentPageState extends State<CommentPage> {
           onPressed: (){
             _viewModel.comment();
             _commentTextEditingController.clear();
+            setState(() {});
           },
           minWidth: 0,
           color: Colors.lightGreen,

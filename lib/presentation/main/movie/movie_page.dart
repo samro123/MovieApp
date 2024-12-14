@@ -296,7 +296,7 @@ class _MoviePageState extends State<MoviePage> {
   Widget _getCustomCardNormal(Movies movies){
     return InkWell(
       onTap: (){
-        Navigator.of(context).pushNamed(Routes.movieDetailsRoute);
+        Navigator.of(context).pushNamed(Routes.movieDetailsRoute, arguments: movies);
       },
       child: Stack(
         children: [
@@ -307,7 +307,7 @@ class _MoviePageState extends State<MoviePage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppSize.s18),
               image: DecorationImage(
-                image: AssetImage(movies.posterUrl),
+                image: NetworkImage(movies.posterUrl),
                 fit: BoxFit.cover
               )
             ),

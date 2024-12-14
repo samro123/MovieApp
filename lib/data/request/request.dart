@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+
 class LoginRequest{
   String username;
   String password;
@@ -16,4 +20,14 @@ class RegisterRequest{
 class CommentRequest{
   String content;
   CommentRequest(this.content);
+}
+
+class ProfileRequest{
+  String username;
+  String firstName;
+  String lastName;
+  MultipartFile avatar;
+  String dob;
+  String city;
+  ProfileRequest(this.username, this.firstName, this.lastName, this.avatar, this.dob, this.city);
 }

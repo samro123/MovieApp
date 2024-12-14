@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:json_annotation/json_annotation.dart';
 part 'responses.g.dart';
 
@@ -24,10 +26,11 @@ class ResultResponse {
   @JsonKey(name: "token")
   String? token;
 
-  @JsonKey(name: "authenticated")
-  bool? authenticated;
+  @JsonKey(name: "expiryTime")
+  String? expiryTime;
 
-  ResultResponse(this.token, this.authenticated);
+
+  ResultResponse(this.token, this.expiryTime);
 
   // from json
   factory ResultResponse.fromJson(Map<String, dynamic> json) =>
@@ -224,6 +227,9 @@ class CommentResult{
   @JsonKey(name: "content")
   String? content;
 
+  @JsonKey(name: "avatar")
+  String? avatar;
+
   @JsonKey(name: "created")
   String? created;
 
@@ -236,7 +242,7 @@ class CommentResult{
   CommentResult(
       this.id, this.movieId,
       this.userId, this.username,
-      this.content, this.created,
+      this.content, this.avatar, this.created,
       this.createdDate, this.modifiedDate
       );
 
@@ -265,4 +271,41 @@ class GetCommentResponse extends BaseResponse{
   factory GetCommentResponse.fromJson(Map<String, dynamic> json) =>
       _$GetCommentResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GetCommentResponseToJson(this);
+}
+
+@JsonSerializable()
+class ProfileResultResponse{
+  @JsonKey(name: "username")
+  String? username;
+  @JsonKey(name:"firstName")
+  String? firstName;
+  @JsonKey(name:"lastName")
+  String? lastName;
+  @JsonKey(name:"avatar")
+  String? avatar;
+  @JsonKey(name:"dob")
+  String? dob;
+  @JsonKey(name:"city")
+  String?city;
+
+  ProfileResultResponse(
+      this.username,
+      this.firstName, this.lastName, this.avatar,
+      this.dob, this.city
+      );
+
+  factory ProfileResultResponse.fromJson(Map<String, dynamic> json) =>
+      _$ProfileResultResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ProfileResultResponseToJson(this);
+}
+@JsonSerializable()
+class ProfileResponse extends BaseResponse{
+  @JsonKey(name: "result")
+  ProfileResultResponse? result;
+
+  ProfileResponse(int? code, String? message, this.result) : super(code, message);
+
+  factory ProfileResponse.fromJson(Map<String, dynamic> json) =>
+      _$ProfileResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ProfileResponseToJson(this);
 }

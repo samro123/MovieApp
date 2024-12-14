@@ -352,3 +352,223 @@ abstract class _RegisterObject implements RegisterObject {
   _$$RegisterObjectImplCopyWith<_$RegisterObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$ProfileObject {
+  String get username => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  MultipartFile get avatar => throw _privateConstructorUsedError;
+  String get dob => throw _privateConstructorUsedError;
+  String get city => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ProfileObjectCopyWith<ProfileObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ProfileObjectCopyWith<$Res> {
+  factory $ProfileObjectCopyWith(
+          ProfileObject value, $Res Function(ProfileObject) then) =
+      _$ProfileObjectCopyWithImpl<$Res, ProfileObject>;
+  @useResult
+  $Res call(
+      {String username,
+      String firstName,
+      String lastName,
+      MultipartFile avatar,
+      String dob,
+      String city});
+}
+
+/// @nodoc
+class _$ProfileObjectCopyWithImpl<$Res, $Val extends ProfileObject>
+    implements $ProfileObjectCopyWith<$Res> {
+  _$ProfileObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? avatar = null,
+    Object? dob = null,
+    Object? city = null,
+  }) {
+    return _then(_value.copyWith(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatar: null == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as MultipartFile,
+      dob: null == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String,
+      city: null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ProfileObjectImplCopyWith<$Res>
+    implements $ProfileObjectCopyWith<$Res> {
+  factory _$$ProfileObjectImplCopyWith(
+          _$ProfileObjectImpl value, $Res Function(_$ProfileObjectImpl) then) =
+      __$$ProfileObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String username,
+      String firstName,
+      String lastName,
+      MultipartFile avatar,
+      String dob,
+      String city});
+}
+
+/// @nodoc
+class __$$ProfileObjectImplCopyWithImpl<$Res>
+    extends _$ProfileObjectCopyWithImpl<$Res, _$ProfileObjectImpl>
+    implements _$$ProfileObjectImplCopyWith<$Res> {
+  __$$ProfileObjectImplCopyWithImpl(
+      _$ProfileObjectImpl _value, $Res Function(_$ProfileObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? avatar = null,
+    Object? dob = null,
+    Object? city = null,
+  }) {
+    return _then(_$ProfileObjectImpl(
+      null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as MultipartFile,
+      null == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ProfileObjectImpl implements _ProfileObject {
+  _$ProfileObjectImpl(this.username, this.firstName, this.lastName, this.avatar,
+      this.dob, this.city);
+
+  @override
+  final String username;
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
+  final MultipartFile avatar;
+  @override
+  final String dob;
+  @override
+  final String city;
+
+  @override
+  String toString() {
+    return 'ProfileObject(username: $username, firstName: $firstName, lastName: $lastName, avatar: $avatar, dob: $dob, city: $city)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ProfileObjectImpl &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.city, city) || other.city == city));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, username, firstName, lastName, avatar, dob, city);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ProfileObjectImplCopyWith<_$ProfileObjectImpl> get copyWith =>
+      __$$ProfileObjectImplCopyWithImpl<_$ProfileObjectImpl>(this, _$identity);
+}
+
+abstract class _ProfileObject implements ProfileObject {
+  factory _ProfileObject(
+      final String username,
+      final String firstName,
+      final String lastName,
+      final MultipartFile avatar,
+      final String dob,
+      final String city) = _$ProfileObjectImpl;
+
+  @override
+  String get username;
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override
+  MultipartFile get avatar;
+  @override
+  String get dob;
+  @override
+  String get city;
+  @override
+  @JsonKey(ignore: true)
+  _$$ProfileObjectImplCopyWith<_$ProfileObjectImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

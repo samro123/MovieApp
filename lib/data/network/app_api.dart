@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:movie_video/app/constant.dart';
 import 'package:movie_video/data/responses/responses.dart';
@@ -8,7 +10,7 @@ part 'app_api.g.dart';
 abstract class AppServiceClient{
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
   
-  @POST("/customer/login")
+  @POST("/identity/auth/token")
   Future<AuthenticationResponse> login(
       @Field("username") String username,
       @Field("password") String password);
@@ -25,7 +27,7 @@ abstract class AppServiceClient{
       @Field("dob") String dob
       );
 
-  @POST("/comment/{movieId}")
+  @POST("/post/comment/{movieId}")
   Future<CommentResponse> comment(
       @Path("movieId") String movieId,
       @Body() Map<String, dynamic> body,
@@ -35,6 +37,16 @@ abstract class AppServiceClient{
   Future<BaseResponse> logout(
       @Field("token") String token
       );
+
+  @PUT("/profile/users")
+  Future<ProfileResponse> updateProfile(
+      @Field("username") String username,
+      @Field("firstName") String firstName,
+      @Field("lastName") String lastName,
+      @Field("avatar") MultipartFile avatar,
+      @Field("dob") String dob,
+      @Field("city") String city
+      );
   
   @GET("/movie/lists")
   Future<PaginatedMoviesResponse> getPaginatedMovies(
@@ -42,8 +54,11 @@ abstract class AppServiceClient{
       @Query("size") int size,
       );
 
-  @GET("/comment/{movieId}")
+  @GET("/post/comment/{movieId}")
   Future<GetCommentResponse> getComments(
       @Path("movieId") String movieId
       );
+  
+  @GET("/profile/users")
+  Future<ProfileResponse> getProfile();
 }

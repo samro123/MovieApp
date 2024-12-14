@@ -20,6 +20,7 @@ class RepositoryImpl extends Repository{
     try{
       //it safe to call the API
       final response = await _remoteDataSource.login(loginRequest);
+      print(response);
       if(response.code == ApiInternalStatus.SUCCESS){
         //return data success)
         //return right
@@ -170,5 +171,42 @@ class RepositoryImpl extends Repository{
     }
   }
 
+  @override
+  Future<Either<Failure, Profile>> updateProfile(ProfileRequest profileRequest) async{
+    if(await _networkInfo.isConnected){
+      try{
+        final response = await _remoteDataSource.updateProfile(profileRequest);
+        if(response.code == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(response.code ?? ResponseCode.DEFAULT,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      }catch(error){
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Profile>> getProfile() async{
+    if(await _networkInfo.isConnected){
+      try{
+        final response = await _remoteDataSource.getProfile();
+        if(response.code == ApiInternalStatus.SUCCESS){
+          return Right(response.toDomain());
+        }else{
+          return Left(Failure(response.code ?? ResponseCode.DEFAULT,
+              response.message ?? ResponseMessage.DEFAULT));
+        }
+      }catch(error){
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    }else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
 
 }

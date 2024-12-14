@@ -24,10 +24,9 @@ class DioFactory{
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
-      AUTHORIZATION: token,
+      AUTHORIZATION: "Bearer $token",
       DEFAULT_LANGUAGE: language
     };
-    dio.interceptors.add(JsonResponseInterceptor());
     dio.options = BaseOptions(
       baseUrl: Constant.baseUrl,
       connectTimeout: Duration(milliseconds: _timeOut),
@@ -49,7 +48,14 @@ class DioFactory{
 class JsonResponseInterceptor extends Interceptor{
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    response.data = json.decode(response.data);
-    super.onResponse(response, handler);
+    Map<String, dynamic>? responseData;
+    if (response.data is Map) {
+      // Response type is Json
+      responseData = response.data;
+    } else {
+      // Response type is Plain Text
+      responseData = json.decode(response.data);
+    }
+    super.onResponse(responseData as Response, handler);
   }
 }

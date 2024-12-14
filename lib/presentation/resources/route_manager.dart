@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_video/app/di.dart';
+import 'package:movie_video/domain/model/model.dart';
 import 'package:movie_video/presentation/details_movie/details_movie.dart';
 import 'package:movie_video/presentation/forgot_password/forgot_password.dart';
 import 'package:movie_video/presentation/login/login.dart';
@@ -37,7 +38,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.movieDetailsRoute:
         initCommentModule();
-        return MaterialPageRoute(builder: (_) => MovieDetail());
+        final movie = routeSettings.arguments as Movies;
+        return MaterialPageRoute(builder: (_) => MovieDetail(movie: movie,));
       case Routes.forgotPasswordRoute:
         initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => ForgotPasswordView());

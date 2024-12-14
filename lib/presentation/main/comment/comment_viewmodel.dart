@@ -29,13 +29,19 @@ class CommentViewModel extends BaseViewModel
 
   @override
   comment() async{
-    (await _commentUseCase.execute(
+    (
+        await _commentUseCase.execute(
         CommentUseCaseInput(movieIdPath, content)))
         .fold((failure){
           print(failure);
     }, (data){
-
+      print("Comment added successfully");
+      _getComments();
     });
+  }
+
+  Future<void> _loadData()async{
+    await _getComments();
   }
 
   Future<void> _getComments() async{

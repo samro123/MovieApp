@@ -24,7 +24,9 @@ class AppString{
   static const String lastName = "LastName";
   static const String lastNameError = "LastName is wrong";
   static const String dob = "Dob";
+  static const String city = "City";
   static const String dobError = "Dob is wrong";
+  static const String cityError = "City is wrong";
   static const String forgetPassword = "ForgotPassword";
   static const String registerText = "Not a member ? Sign up";
   static const String loading = "Loading...";
@@ -57,5 +59,10 @@ class AppString{
   static const String logout = "Logout";
   static const String inviteYourFriends = "Invite Your Friends";
   static const String typeSomething = "Type Something...";
+
+  static const String profilePicture = "upload_profile_pictuSearchre";
+  static const String photoGalley = "photo_gallery";
+  static const String photoCamera = "camera";
+  static const String pickProfilePicture = "pick_profile_picture";
 
 }
