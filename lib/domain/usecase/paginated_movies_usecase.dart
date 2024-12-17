@@ -13,8 +13,8 @@ class PaginatedMoviesUseCase extends BaseUseCase<PaginatedMoviesParams, Paginate
     return await _repository.getPaginatedMovies(params.page, params.size);
   }
 
-
 }
+
 
 class PaginatedMoviesParams{
   final int page;

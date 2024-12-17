@@ -24,9 +24,10 @@ class DioFactory{
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
-      AUTHORIZATION: "Bearer $token",
+      AUTHORIZATION: "$token",
       DEFAULT_LANGUAGE: language
     };
+
     dio.options = BaseOptions(
       baseUrl: Constant.baseUrl,
       connectTimeout: Duration(milliseconds: _timeOut),
@@ -45,17 +46,24 @@ class DioFactory{
   }
 }
 
-class JsonResponseInterceptor extends Interceptor{
+class JsonResponseInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    Map<String, dynamic>? responseData;
-    if (response.data is Map) {
-      // Response type is Json
-      responseData = response.data;
-    } else {
-      // Response type is Plain Text
-      responseData = json.decode(response.data);
+    if (response.data is String) {
+      try {
+        // Convert Plain Text (String) to JSON
+        response.data = json.decode(response.data);
+      } catch (e) {
+        print("Failed to decode JSON: $e");
+      }
     }
-    super.onResponse(responseData as Response, handler);
+    super.onResponse(response, handler);
   }
-}
+
+  @override void onError(DioError err, ErrorInterceptorHandler handler) {
+    if (err.response?.statusCode == 401) {
+      print("Unauthorized - Token might be invalid or expired.");
+      // Handle token refresh logic here if applicable
+      } else { print("DioError: ${err.message}"); } super.onError(err, handler);
+  }
+  }

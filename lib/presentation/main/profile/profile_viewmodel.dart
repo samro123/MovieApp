@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
-
-import 'package:dio/src/multipart_file.dart';
-import 'package:movie_video/data/request/request.dart';
 import 'package:movie_video/domain/model/model.dart';
 import 'package:movie_video/domain/usecase/profile_usecase.dart';
 import 'package:movie_video/presentation/base/baseviewmodel.dart';
@@ -24,7 +21,7 @@ class ProfileViewModel extends BaseViewModel
   UpdateProfileUseCase _updateProfileUseCase;
   GetProfileUseCase _getProfileUseCase;
   final _dataStreamController = BehaviorSubject<GetProfileViewObject>();
-  var profileViewObject = ProfileObject("", "", "", "" as MultipartFile, "", "");
+  var profileViewObject = ProfileObject("", "", "", null, "", "");
   ProfileViewModel(this._updateProfileUseCase, this._getProfileUseCase);
 
   @override
@@ -113,7 +110,7 @@ class ProfileViewModel extends BaseViewModel
       LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _updateProfileUseCase.execute(ProfileUseCaseInput(
         profileViewObject.username, profileViewObject.firstName,
-        profileViewObject.lastName, profileViewObject.avatar, profileViewObject.dob,
+        profileViewObject.lastName, profileViewObject.avatar!, profileViewObject.dob,
         profileViewObject.city))).fold((failure){
           inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message));
     }, (profile) => inputState.add(SuccessState("Update Success")));
@@ -223,22 +220,23 @@ class ProfileViewModel extends BaseViewModel
 
   @override
   // TODO: implement inputProfilePicture
-  Sink get inputProfilePicture => throw UnimplementedError();
+  Sink get inputProfilePicture => _profilePictureStreamController.sink;
 
   @override
   // TODO: implement outputProfilePicture
-  Stream<File?> get outputProfilePicture => throw UnimplementedError();
+  Stream<File?> get outputProfilePicture =>  _profilePictureStreamController.stream.map((file) => file);
 
   @override
-  setProfilePicture(File file) async {
-    inputProfilePicture.add(file);
-    if (file.path.isNotEmpty) {
-      // update register view object with profilePicture value
-      MultipartFile avatar = await MultipartFile.fromFile(file.path);
-      profileViewObject = profileViewObject.copyWith(avatar: avatar); // using data class like kotlin
-    } else {
-      // reset profilePicture value in register view object
-      profileViewObject = profileViewObject.copyWith(avatar: "" as MultipartFile);
+  setProfilePicture(File profilePictures) {
+    inputProfilePicture.add(profilePictures);
+    if(profilePictures.path.isNotEmpty){
+      //update register view object with username value
+      profileViewObject = profileViewObject.copyWith(avatar: profilePictures); // using data class like kotlin
+    }
+    else{
+      //reset username value in register view object
+      profileViewObject = profileViewObject.copyWith(avatar: null); // using data class like kotlin
+
     }
     _validate();
   }

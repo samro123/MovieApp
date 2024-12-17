@@ -67,6 +67,11 @@ class Movies{
       );
 }
 
+class RecommendMovies{
+  List<Movies> movies;
+  RecommendMovies(this.movies);
+}
+
 class PaginatedMovies{
   int currentPage;
   int totalPages;

@@ -7,6 +7,7 @@ abstract class RemoteDataSource{
   Future<ForgotPasswordResponse> forgotPassword(String email);
   Future<RegisterAuthResponse> register(RegisterRequest registerRequest);
   Future<PaginatedMoviesResponse> getPaginatedMovie(int page, int size);
+  Future<RecommendMoviesResponse> getRecommendMovies();
   Future<CommentResponse> comment(String movieId, String comment);
   Future<GetCommentResponse> getComment(String movieId);
   Future<BaseResponse> logout(String token);
@@ -47,6 +48,11 @@ class RemoteDataSourceImplementer implements RemoteDataSource{
   }
 
   @override
+  Future<RecommendMoviesResponse> getRecommendMovies() async{
+    return await _appServiceClient.getRecommendMovies();
+  }
+
+  @override
   Future<CommentResponse> comment(String movieId, String comment) async {
     return await _appServiceClient.comment(movieId, {"content":comment});
   }
@@ -76,4 +82,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource{
   Future<ProfileResponse> getProfile() async{
     return await _appServiceClient.getProfile();
   }
+
+
 }

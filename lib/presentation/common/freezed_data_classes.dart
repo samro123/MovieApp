@@ -19,7 +19,7 @@ class RegisterObject with _$RegisterObject{
 class ProfileObject with _$ProfileObject{
   factory ProfileObject(
       String username, String firstName,
-      String lastName, MultipartFile avatar, String dob,
+      String lastName, File? avatar, String dob,
       String city
       ) = _ProfileObject;
 }

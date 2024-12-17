@@ -64,6 +64,13 @@ extension PaginatedMoviesResponseMapper on PaginatedMoviesResponse?{
     );
   }
 }
+extension RecommendMoviesResponseMapper on RecommendMoviesResponse?{
+  RecommendMovies toDomain(){
+    List<Movies> mappedMovies = (this?.result?.map((moviesResponse) => moviesResponse.toDomain())
+        ?? Iterable.empty()).cast<Movies>().toList();
+    return RecommendMovies(mappedMovies);
+  }
+}
 extension CommentResponseMapper on CommentResponse?{
   Comment toDomain(){
     return Comment(

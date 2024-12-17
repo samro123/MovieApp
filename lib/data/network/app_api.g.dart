@@ -14,8 +14,7 @@ class _AppServiceClient implements AppServiceClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??=
-        'https://8814-2001-ee0-4b52-8040-1c7c-7997-f51e-1897.ngrok-free.app/api/v1';
+    baseUrl ??= 'https://8ed2-113-171-210-114.ngrok-free.app/api/v1';
   }
 
   final Dio _dio;
@@ -216,29 +215,50 @@ class _AppServiceClient implements AppServiceClient {
     String username,
     String firstName,
     String lastName,
-    MultipartFile avatar,
+    File avatar,
     String dob,
     String city,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {
-      'username': username,
-      'firstName': firstName,
-      'lastName': lastName,
-      'avatar': avatar,
-      'dob': dob,
-      'city': city,
-    };
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'username',
+      username,
+    ));
+    _data.fields.add(MapEntry(
+      'firstName',
+      firstName,
+    ));
+    _data.fields.add(MapEntry(
+      'lastName',
+      lastName,
+    ));
+    _data.files.add(MapEntry(
+      'avatar',
+      MultipartFile.fromFileSync(
+        avatar.path,
+        filename: avatar.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'dob',
+      dob,
+    ));
+    _data.fields.add(MapEntry(
+      'city',
+      city,
+    ));
     final _options = _setStreamType<ProfileResponse>(Options(
       method: 'PUT',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
         .compose(
           _dio.options,
-          '/profile/users',
+          '/profile/internal/users',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -298,6 +318,39 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<RecommendMoviesResponse> getRecommendMovies() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<RecommendMoviesResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/movie/recommend',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late RecommendMoviesResponse _value;
+    try {
+      _value = RecommendMoviesResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<GetCommentResponse> getComments(String movieId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -343,7 +396,7 @@ class _AppServiceClient implements AppServiceClient {
     )
         .compose(
           _dio.options,
-          '/profile/users',
+          '/profile/user/my-profile',
           queryParameters: queryParameters,
           data: _data,
         )

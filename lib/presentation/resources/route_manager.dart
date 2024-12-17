@@ -35,6 +35,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RegisterView());
       case Routes.mainRoute:
         initMainModule();
+        initProfileModule();
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.movieDetailsRoute:
         initCommentModule();

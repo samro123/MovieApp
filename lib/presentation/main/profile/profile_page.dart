@@ -83,14 +83,19 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: AppSize.s100,),
             Stack(
               children: [
-                SizedBox(
-                  height: AppSize.s120,
-                  width: AppSize.s120,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(AppSize.s100),
-                    child: Image(
-                      image: AssetImage('assets/data/actor_1.jpeg'),
-                      fit: BoxFit.cover,
+                InkWell(
+                  onTap: (){
+                      _showPicker(context);
+                  },
+                  child: SizedBox(
+                    height: AppSize.s120,
+                    width: AppSize.s120,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(AppSize.s100),
+                      child: Image(
+                        image: AssetImage('assets/data/actor_1.jpeg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

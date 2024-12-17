@@ -26,7 +26,7 @@ class ProfileRequest{
   String username;
   String firstName;
   String lastName;
-  MultipartFile avatar;
+  File avatar;
   String dob;
   String city;
   ProfileRequest(this.username, this.firstName, this.lastName, this.avatar, this.dob, this.city);

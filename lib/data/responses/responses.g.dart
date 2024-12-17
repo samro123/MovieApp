@@ -179,6 +179,24 @@ Map<String, dynamic> _$PaginatedMoviesResponseToJson(
       'result': instance.result,
     };
 
+RecommendMoviesResponse _$RecommendMoviesResponseFromJson(
+        Map<String, dynamic> json) =>
+    RecommendMoviesResponse(
+      (json['code'] as num?)?.toInt(),
+      json['message'] as String?,
+      (json['result'] as List<dynamic>?)
+          ?.map((e) => MovieResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$RecommendMoviesResponseToJson(
+        RecommendMoviesResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'result': instance.result,
+    };
+
 CommentResult _$CommentResultFromJson(Map<String, dynamic> json) =>
     CommentResult(
       json['id'] as String?,

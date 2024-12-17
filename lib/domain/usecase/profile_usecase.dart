@@ -35,7 +35,7 @@ class ProfileUseCaseInput{
   String username;
   String firstName;
   String lastName;
-  MultipartFile avatar;
+  File avatar;
   String dob;
   String city;
   ProfileUseCaseInput(

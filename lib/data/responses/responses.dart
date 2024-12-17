@@ -209,6 +209,18 @@ class PaginatedMoviesResponse extends BaseResponse{
   Map<String, dynamic> toJson() => _$PaginatedMoviesResponseToJson(this);
 }
 
+@JsonSerializable()
+class RecommendMoviesResponse extends BaseResponse{
+  @JsonKey(name: "result")
+  List<MovieResponse>? result;
+
+  RecommendMoviesResponse(int? code, String? message, this.result) : super(code, message);
+
+  factory RecommendMoviesResponse.fromJson(Map<String, dynamic> json) =>
+      _$RecommendMoviesResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$RecommendMoviesResponseToJson(this);
+}
+
 // Comment
 @JsonSerializable()
 class CommentResult{

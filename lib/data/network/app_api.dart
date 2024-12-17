@@ -38,14 +38,15 @@ abstract class AppServiceClient{
       @Field("token") String token
       );
 
-  @PUT("/profile/users")
+  @PUT("/profile/internal/users")
+  @MultiPart()
   Future<ProfileResponse> updateProfile(
-      @Field("username") String username,
-      @Field("firstName") String firstName,
-      @Field("lastName") String lastName,
-      @Field("avatar") MultipartFile avatar,
-      @Field("dob") String dob,
-      @Field("city") String city
+      @Part(name:"username") String username,
+      @Part(name:"firstName") String firstName,
+      @Part(name:"lastName") String lastName,
+      @Part(name:"avatar") File avatar,
+      @Part(name:"dob") String dob,
+      @Part(name:"city") String city
       );
   
   @GET("/movie/lists")
@@ -54,11 +55,14 @@ abstract class AppServiceClient{
       @Query("size") int size,
       );
 
+  @GET("/movie/recommend")
+  Future<RecommendMoviesResponse> getRecommendMovies();
+
   @GET("/post/comment/{movieId}")
   Future<GetCommentResponse> getComments(
       @Path("movieId") String movieId
       );
   
-  @GET("/profile/users")
+  @GET("/profile/user/my-profile")
   Future<ProfileResponse> getProfile();
 }

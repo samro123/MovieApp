@@ -358,7 +358,7 @@ mixin _$ProfileObject {
   String get username => throw _privateConstructorUsedError;
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
-  MultipartFile get avatar => throw _privateConstructorUsedError;
+  File? get avatar => throw _privateConstructorUsedError;
   String get dob => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
 
@@ -377,7 +377,7 @@ abstract class $ProfileObjectCopyWith<$Res> {
       {String username,
       String firstName,
       String lastName,
-      MultipartFile avatar,
+      File? avatar,
       String dob,
       String city});
 }
@@ -398,7 +398,7 @@ class _$ProfileObjectCopyWithImpl<$Res, $Val extends ProfileObject>
     Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? avatar = null,
+    Object? avatar = freezed,
     Object? dob = null,
     Object? city = null,
   }) {
@@ -415,10 +415,10 @@ class _$ProfileObjectCopyWithImpl<$Res, $Val extends ProfileObject>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: null == avatar
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as MultipartFile,
+              as File?,
       dob: null == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
@@ -443,7 +443,7 @@ abstract class _$$ProfileObjectImplCopyWith<$Res>
       {String username,
       String firstName,
       String lastName,
-      MultipartFile avatar,
+      File? avatar,
       String dob,
       String city});
 }
@@ -462,7 +462,7 @@ class __$$ProfileObjectImplCopyWithImpl<$Res>
     Object? username = null,
     Object? firstName = null,
     Object? lastName = null,
-    Object? avatar = null,
+    Object? avatar = freezed,
     Object? dob = null,
     Object? city = null,
   }) {
@@ -479,10 +479,10 @@ class __$$ProfileObjectImplCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      null == avatar
+      freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as MultipartFile,
+              as File?,
       null == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
@@ -508,7 +508,7 @@ class _$ProfileObjectImpl implements _ProfileObject {
   @override
   final String lastName;
   @override
-  final MultipartFile avatar;
+  final File? avatar;
   @override
   final String dob;
   @override
@@ -551,7 +551,7 @@ abstract class _ProfileObject implements ProfileObject {
       final String username,
       final String firstName,
       final String lastName,
-      final MultipartFile avatar,
+      final File? avatar,
       final String dob,
       final String city) = _$ProfileObjectImpl;
 
@@ -562,7 +562,7 @@ abstract class _ProfileObject implements ProfileObject {
   @override
   String get lastName;
   @override
-  MultipartFile get avatar;
+  File? get avatar;
   @override
   String get dob;
   @override
